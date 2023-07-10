@@ -1,78 +1,120 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Sistema de Processamento de Pagamentos
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Este é um projeto desenvolvido para o desafio de implementar um sistema de processamento de pagamentos integrado ao ambiente de homologação do Asaas. O sistema permite que o cliente selecione a opção de pagamento entre Boleto, Cartão ou Pix.
 
-## About Laravel
+## Documentação
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A documentação da API utilizada neste projeto pode ser encontrada em: [Documentação Asaas](https://asaasv3.docs.apiary.io/#)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Credenciais de Sandbox
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Para iniciar a integração, é necessário criar uma conta no Asaas Sandbox através do link: [Asaas Sandbox](https://sandbox.asaas.com/). Após a criação da conta, você poderá obter a API Key de Sandbox na seção "Configuração de Conta -> Integrações".
 
-## Learning Laravel
+## Funcionalidades
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+O sistema foi desenvolvido com as seguintes funcionalidades:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Opção de pagamento entre Boleto, Cartão de Crédito e Pix.
+- Formulário com os campos necessários para processar o pagamento.
+- Botão "Finalizar Pagamento" para submeter o formulário.
+- Página de agradecimento exibida após o processamento do pagamento com sucesso.
+- Tratamento dos dados enviados na requisição para evitar dados faltantes ou inválidos.
+- Padronização das respostas das solicitações através da utilização de Resources.
+- Integração com as APIs do Asaas para processar pagamentos.
+- Exibição do link do boleto na página de agradecimento, caso o pagamento seja feito via boleto.
+- Exibição do QRCode e opção de "Copia e Cola" na página de agradecimento, caso o pagamento seja feito via Pix.
+- Exibição de mensagem amigável em caso de recusa do cartão ou erro na requisição de pagamento.
+- Utilização de um framework Laravel, desenvolvido em PHP.
+- Utilização de um layout básico usando Bootstrap.
 
-## Laravel Sponsors
+## Requisitos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Antes de executar o projeto, verifique se você possui os seguintes requisitos:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+- PHP (versão X.X.X)
+- Laravel (versão X.X.X)
+- Banco de dados relacional (recomendado: MySQL)
 
-## Contributing
+## Executando o Projeto
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Siga as etapas abaixo para executar o projeto em seu ambiente local:
 
-## Code of Conduct
+1. Clone o repositório para o seu computador:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+git clone https://github.com/williamsena13/api-processamento-pagamentos-asaas
+```
 
-## Security Vulnerabilities
+2. Acesse o diretório do projeto:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+cd api-processamento-pagamentos-asaas
+```
 
-## License
+3. Instale as dependências do projeto:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+composer install
+```
+
+4. Gere a chave do Laravel
+
+```
+php artisan key:generate
+```
+
+5. Configure as informações do banco de dados
+
+```
+DB_CONNECTION=
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+```
+
+6. Configure as credenciais do Asaas:
+
+Edite o arquivo `.env` e insira sua API Key de Sandbox fornecida pelo Asaas:
+
+```
+KEY_API_ASAAS=sua-api-key
+```
+7. Execute as migrações do banco de dados:
+
+```
+php artisan migrate
+```
+8. Execute as Seeds no banco de daods:
+```
+php artisan db:seed
+```
+9. Instale as Dependencias npm 
+```
+npm install
+```
+10. Compile os arquivos do VueJS
+```
+npm run dev
+```
+
+11. Inicie o servidor de desenvolvimento:
+
+```
+php artisan serve
+```
+
+12. Acesse o aplicativo em seu navegador:
+
+```
+http://localhost:8000
+```
+
+## Autor
+
+[William B. Sena](https://github.com/williamsena13)
+
+## Licença
+
+Este projeto foi desenvolvido pelo [William B. Sena](https://github.com/williamsena13) 
