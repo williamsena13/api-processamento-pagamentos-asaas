@@ -14,7 +14,8 @@ class PaymentOptionSeeder extends Seeder
     {
         $paymentOptions = [
             ['description' => 'Boleto'],
-            ['description' => 'Cartão'],
+            ['description' => 'Cartão de Crédito'],
+            ['description' => 'Cartão de Débito'],
             ['description' => 'Pix'],
         ];
 
