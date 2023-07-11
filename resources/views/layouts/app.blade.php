@@ -33,7 +33,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if( Auth::user() )
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Cobraças</a>
+                        </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -77,6 +81,7 @@
         </nav>
 
         <main class="py-4">
+            <input type="hidden" id="edit-key-asaas" value="{{env('ASAAS_API_KEY')}}">
             @yield('content')
         </main>
     </div>

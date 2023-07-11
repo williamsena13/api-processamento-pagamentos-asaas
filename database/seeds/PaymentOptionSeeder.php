@@ -13,10 +13,9 @@ class PaymentOptionSeeder extends Seeder
     public function run()
     {
         $paymentOptions = [
-            ['description' => 'Boleto'],
-            ['description' => 'Cartão de Crédito'],
-            ['description' => 'Cartão de Débito'],
-            ['description' => 'Pix'],
+            ['description' => 'Boleto', 'value'=> 'BOLETO'],
+            ['description' => 'Cartão de Crédito', 'value'=> 'CREDIT_CARD'],
+            ['description' => 'Pix', 'value'=> 'PIX'],
         ];
 
         foreach ($paymentOptions as $option) {

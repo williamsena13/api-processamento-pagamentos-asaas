@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () {    
     return view('welcome');
 });
 
-Route::get('/checkout', 'CheckoutController@getFunction')->name('checkout');
-
 Auth::routes();
+
+Route::get('/checkout', 'CheckoutController@getFunction')->name('checkout');
 
 Route::get('/home', 'HomeController@index')->name('home');
