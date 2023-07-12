@@ -3,8 +3,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 const routes = [
-    
-
+    { path : '/home' , name: 'home', component: require('../../components/VcHome.vue').default , meta: { requeresAuth: true }},
 ];
 
 Vue.use( Router );

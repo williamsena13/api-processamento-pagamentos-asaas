@@ -22,3 +22,8 @@ Auth::routes();
 Route::get('/checkout', 'CheckoutController@getFunction')->name('checkout');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => 'charges' ], function() {
+    Route::get('', function(){
+    })->name('charges');
+});
+Route::get('/home', 'HomeController@index')->name('home');

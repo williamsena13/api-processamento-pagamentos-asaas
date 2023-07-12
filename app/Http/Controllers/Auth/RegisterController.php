@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Src\Asaas;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,11 +67,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'cnpj' => $data['cnpj'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        try {
+            DB::beginTransaction();
+            $user = User::create([
+                'cnpj' => $data['cnpj'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+            $asas = new Asaas;
+            $retorno = $asas->createCustomer( $data['name'], $data['cnpj'], $data['email'] );
+            if( isset($retorno['id'])){
+                $user->setCustomerId($retorno['id']);
+            }
+            DB::commit();
+            return $user;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd("Erro ao cadastrar usuário", $e->getMessage(), $e);
+        }
     }
 }

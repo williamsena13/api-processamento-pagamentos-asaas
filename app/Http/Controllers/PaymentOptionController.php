@@ -12,5 +12,5 @@ class PaymentOptionController extends Controller
     {
         $paymentOptions = PaymentOption::orderBy('description')->get();
         return response()->json($paymentOptions);
-    }
+    }    
 }

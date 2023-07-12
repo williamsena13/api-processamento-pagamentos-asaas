@@ -5,7 +5,7 @@ import './bootstrap'
 
 import Vue from 'vue';
 //
-//import './src/services/axios'
+import './src/services/axios'
 //
 import Vuex from 'vuex'
 

@@ -36,7 +36,7 @@
                     <ul class="navbar-nav mr-auto">
                         @if( Auth::user() )
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Cobraças</a>
+                            <a class="nav-link" href="{{ route('charges') }}">Cobraças</a>
                         </li>
                         @endif
                     </ul>

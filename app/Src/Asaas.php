@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Http;
 class Asaas
 {
     protected $accessToken;
-    protected $url = "https://sandbox.asaas.com/api/v3";
+    protected $url;
     protected $header;
 
     public function __construct()
     {
-        $this->accessToken = config('asaas.api_key');
+        $this->url = env('ASAAS_URL');
+        $this->accessToken = env('ASAAS_API_KEY');
         $this->header = [
             'Accept' => 'application/json',
             'access_token' => $this->accessToken,
@@ -23,16 +24,19 @@ class Asaas
     * CUSTOMERS
     *
     */
-    
+    public function verificaCadastro()
+    {
+
+    }
+
     public function getCustomers()
     {            
         $response = Http::withHeaders($this->header)->get($this->url . '/customers');
-
         if ($response->failed()) {
             throw new \Exception('Failed to retrieve customers from Asaas API');
         }
-
-        return $response->json();
+        $retorno = $response->json();
+        return $retorno;
     }
 
     public function getCustomerById($customerId)
@@ -54,7 +58,7 @@ class Asaas
         $param = [
             'name' => $name,
             'cpfCnpj' => $cnpj,
-            'groupName' => env('APP_NAME'),
+            //'groupName' => env('APP_NAME'),
         ];
 
         if ($email !== null) {
@@ -64,12 +68,32 @@ class Asaas
         if ($mobile !== null) {
             $param['mobilePhone'] = $mobile;
         }
-
+        //dd($param,$this->url);
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'access_token' => $this->accessToken,
             'Content-Type' => 'application/json',
         ])->post($this->url . '/customers', $param);
+
+        if ($response->failed()) {
+            return 'cURL Error #' . $response->status();
+        }
+        $responseData = $response->json();
+        return $response->json();
+        // Verifica se a resposta contém a chave "id"
+        if (isset($responseData['id'])) {
+            return $responseData['id'];
+        } else {
+            return null; // Ou outra ação caso não exista a chave "id" no retorno
+        }
+    }
+
+    public function deleteCustomer($customerId)
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'access_token' => $this->accessToken,
+        ])->delete($this->url . '/customers/' . $customerId);
 
         if ($response->failed()) {
             return 'cURL Error #' . $response->status();
