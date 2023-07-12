@@ -16,7 +16,7 @@
                     @endif
 
                     {{ __('You are logged in!') }}
-                    <asaas-api></asaas-api>
+                    <example-component></example-component>
                 </div>
             </div>
         </div>

@@ -6,7 +6,6 @@ Vue.use({
     Vue.prototype.$http = axios.create({      
       baseURL: "/api",
       contentType: 'application/json',
-      //headers :  {}
     })
 
     Vue.prototype.$http.interceptors.request.use( request => {
