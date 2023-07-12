@@ -1,14 +1,9 @@
-window.$ = window.jQuery = require('jquery');
 window.Vue = require('vue');
 //
 import '@fortawesome/fontawesome-free/css/all.css'
 import Vue from 'vue';
 //
 import './src/services/axios'
-
-import AsaasService from './src/services/asaas';
-
-Vue.use(AsaasService);
 
 
 import './bootstrap'

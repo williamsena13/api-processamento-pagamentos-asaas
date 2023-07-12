@@ -16,7 +16,7 @@
                     @endif
 
                     {{ __('You are logged in!') }}
-                    <vc-home></vc-home>
+                    <asaas-api></asaas-api>
                 </div>
             </div>
         </div>
