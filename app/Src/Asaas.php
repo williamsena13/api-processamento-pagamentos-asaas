@@ -2,32 +2,28 @@
 
 namespace App\Src;
 
+use App\Http\Resources\ErrorResource;
+
 use Illuminate\Support\Facades\Http;
 
 class Asaas
 {
-    protected $accessToken;
     protected $url;
     protected $header;
 
     public function __construct()
     {
         $this->url = env('ASAAS_URL');
-        $this->accessToken = env('ASAAS_API_KEY');
         $this->header = [
             'Accept' => 'application/json',
-            'access_token' => $this->accessToken,
+            'access_token' => env('ASAAS_API_KEY'),
         ];
     }
     /*
     *
     * CUSTOMERS
     *
-    */
-    public function verificaCadastro()
-    {
-
-    }
+    */    
 
     public function getCustomers()
     {            
@@ -35,22 +31,25 @@ class Asaas
         if ($response->failed()) {
             throw new \Exception('Failed to retrieve customers from Asaas API');
         }
-        $retorno = $response->json();
-        return $retorno;
+        if ( $response->successful() ){            
+            return $response->json();
+        }
+
+        return $response;        
     }
 
     public function getCustomerById($customerId)
     {
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'access_token' => $this->accessToken,
-        ])->get($this->url . '/customers/' . $customerId);
+        $response = Http::withHeaders($this->header)->get($this->url . '/customers/' . $customerId);
 
         if ($response->failed()) {
             return 'cURL Error #' . $response->status();
         }
+        if ( $response->successful() ){            
+            return $response->body();
+        }
 
-        return $response->body();
+        return $response;        
     }
 
     public function createCustomer($name, $cnpj, $email = null, $mobile = null)
@@ -69,37 +68,30 @@ class Asaas
             $param['mobilePhone'] = $mobile;
         }
         //dd($param,$this->url);
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'access_token' => $this->accessToken,
-            'Content-Type' => 'application/json',
-        ])->post($this->url . '/customers', $param);
+        $response = Http::withHeaders($this->header)->post($this->url . '/customers', $param);
 
         if ($response->failed()) {
             return 'cURL Error #' . $response->status();
         }
-        $responseData = $response->json();
-        return $response->json();
-        // Verifica se a resposta contém a chave "id"
-        if (isset($responseData['id'])) {
-            return $responseData['id'];
-        } else {
-            return null; // Ou outra ação caso não exista a chave "id" no retorno
+        if ( $response->successful() ){            
+            return $response->json();
         }
+
+        return $response;
     }
 
     public function deleteCustomer($customerId)
     {
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'access_token' => $this->accessToken,
-        ])->delete($this->url . '/customers/' . $customerId);
+        $response = Http::withHeaders($this->header)->delete($this->url . '/customers/' . $customerId);
 
         if ($response->failed()) {
             return 'cURL Error #' . $response->status();
         }
+        if ( $response->successful() ){            
+            return $response->body();
+        }
 
-        return $response->body();
+        return $response;        
     }
 
     public function updateCustomer($id, $name, $cnpj, $email = null, $mobile = null)
@@ -118,20 +110,79 @@ class Asaas
             $param['mobilePhone'] = $mobile;
         }
 
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'access_token' => $this->accessToken,
-            'Content-Type' => 'application/json',
-        ])->post($this->url . '/customers/' . $id, $param);
+        $response = Http::withHeaders($this->header)->post($this->url . '/customers/' . $id, $param);
 
         if ($response->failed()) {
             return 'cURL Error #' . $response->status();
         }
+  
+        if ( $response->successful() ){            
+            return $response->body();
+        }
 
-        return $response->body();
+        return $response;
     }
 
+    /*
+    *
+    * PAYMENTS
+    *
+    */
 
+    public function getCustomerPayments($customerId)
+    {
+        try {
+            $url = "$this->url/payments?customer=$customerId";
+            $response = Http::withHeaders($this->header)->get($url);// 
+            
+            if ($response->failed()) {
+                throw new \Exception('Failed to retrieve customers from Asaas API');
+            }    
+            if ( $response->successful() ){
+                return $response->json();
+            }
 
+            return $response;
+        } catch (\Exception $e) {
+            dd( $e, $e);
+            return new ErrorResource($e);
+        }
+    }
+
+    public function createPayment(
+        $billingType, 
+        $customerId, 
+        $value, 
+        $dueDate, 
+        $description, 
+        $nrReference = null, 
+        $nrParc = null, 
+        $nrValueParcela = null
+    )
+    {
+        $url = $this->url . '/payments';
+
+        $payload = [
+            'billingType' => $billingType,
+            'customer' => $customerId,
+            'value' => $value,
+            'dueDate' => $dueDate,
+            'description' => $description,
+            'externalReference' => $nrReference,
+            'installmentCount' => $nrParc,
+            'installmentValue' => $nrValueParcela
+        ];
+
+        $response = Http::withHeaders($this->header)->post($url, $payload);
+
+        if ($response->successful()) {
+            return $response->json();
+        } else {            
+            return response()->json([
+                'errorCode' => $response->status(),
+                'errorMessage' => $response->body(),
+            ], 500);
+        }
+    }
 
 }

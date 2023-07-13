@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Payment as ModelsPayment;
+use App\Src\Asaas;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Payment extends Model
 {
@@ -26,5 +29,26 @@ class Payment extends Model
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+
+    public static function findUserPayments(){
+    {
+        $user = Auth::user();
+        try {
+            //code...
+            
+            $retornoAssas = $user->getAsaasPayments();
+            $asaasPayments = $retornoAssas["data"];
+            
+            return $asaasPayments;
+        } catch (\Exception $e) {
+            dd( "Erro ao carregar", $e);
+        }
+        
+        
+        return view('admin.payments.index');
+    }
+
     }
 }

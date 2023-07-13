@@ -36,7 +36,10 @@
                     <ul class="navbar-nav mr-auto">
                         @if( Auth::user() )
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('charges') }}">Cobraças</a>
+                            <a class="nav-link" href="{{ route('home') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('payments.index') }}">Cobraças</a>
                         </li>
                         @endif
                     </ul>
@@ -55,7 +58,7 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('checkout') }}">
+                            <a class="nav-link">
                                 Carrinho
                             </a>
                         </li>
@@ -65,6 +68,11 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <!--
+                                <a class="dropdown-item">
+                                    Perfil
+                                </a>
+                            -->
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -82,7 +90,7 @@
         </nav>
 
         <main class="py-4">
-            <input type="hidden" id="edit-key-asaas" value="{{env('ASAAS_API_KEY')}}">
+            <input type="hidden" id="edit-api-key" value="{{Auth::user() ? Auth::user()->api_token : ''}}">
             @yield('content')
         </main>
     </div>

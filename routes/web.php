@@ -19,11 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/checkout', 'CheckoutController@getFunction')->name('checkout');
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['prefix' => 'charges' ], function() {
-    Route::get('', function(){
-    })->name('charges');
-});
+
+Route::resource('payments', 'PaymentsController');
+
 Route::get('/home', 'HomeController@index')->name('home');

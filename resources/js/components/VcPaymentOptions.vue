@@ -120,7 +120,7 @@ export default {
 
 <style>
 .btn-pagamento {
-  width: 150px;
+  width: 100%;
   height: 60px;
 }
 </style>

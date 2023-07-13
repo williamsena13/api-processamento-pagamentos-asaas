@@ -25,31 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
-        try {
-            //code...
-            $user = Auth::user() ;
-            $asas = new Asaas();
-            $clientes = $asas->getCustomers();
-            /*
-            $cadastro = false;
-            
-            foreach ($clientes as $cliente) {
-                # code...
-                //Auth
-                if (  $cliente['cpfCnpj'] == $user->cnpj ){
-                    $cadastro = true;
-                }
-            }
-            if ( !$cadastro ){
-                dd($asas, $retorno);
-            }
-            */
-
-
-        } catch (\Exception $e) {
-            dd("ERRO AO BUSCAR CLIENTES", $e->getMessage(), $e);
+        if ( empty(Auth::user()->customer_id) ){
+            dd("FAZER ALGO");
         }
-        return view('home');
+        Auth::user()->generateApiKey();
+        return view('admin.home');
     }
 }
