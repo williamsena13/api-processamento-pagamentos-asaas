@@ -7,13 +7,11 @@ use App\Src\Asaas;
 
 use Illuminate\Support\Facades\Auth;
 
-class Payment {    
-    public static function findUserPayments(){
+class Payment  {    
+    public static function findUserPayments()
     {
         $user = Auth::user();
         try {
-            //code...
-            
             $retornoAssas = $user->getAsaasPayments();
             if ( $retornoAssas["data"] ){
                 return $retornoAssas["data"];                
@@ -25,9 +23,20 @@ class Payment {
         }
         
 
+    }    
+    public static function storePayment($request)
+    {
+        $asaas = new Asaas;
+        $payment = $asaas->createPayment(
+            $request->billingType, 
+            Auth::user()->customer_id, 
+            $request->value, 
+            $request->dueDate, 
+            $request->description,
+            null,
+            null,
+            null
+        );
+        return $payment;
     }
-
-    
-
-    
 }

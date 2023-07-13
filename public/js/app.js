@@ -2390,17 +2390,8 @@ function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefine
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    name: {
-      type: String
-    },
-    email: {
-      type: String
-    },
-    cnpj: {
-      type: String
-    },
-    mobilePhone: {
-      type: String
+    user: {
+      type: Object
     }
   },
   data: function data() {
@@ -2409,6 +2400,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       email: "",
       cnpj: "",
       mobilePhone: "",
+      dueDate: "",
       valid: false,
       description: "",
       paymentOption: null
@@ -2427,20 +2419,26 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         return;
       }
       var parametro = {
-        tipoPag: this.paymentOption,
+        billingType: this.paymentOption,
         value: document.getElementById("span-value").innerText,
-        name: this.userName,
+        name: this.name,
         email: this.email,
         cnpj: this.cnpj,
-        mobilePhone: this.mobilePhone
+        dueDate: this.dueDate,
+        mobilePhone: this.mobilePhone,
+        description: this.description
       };
       try {
         this.$http.post("/payments", parametro).then(function (response) {
           _this.loading = false;
-          console.log("Sucesso ao buscar opções");
+          console.log("Sucesso ao gravar pagamento");
           console.log(response);
           if (response.data) {
             _this.paymentOptions = response.data;
+          }
+          if (response.response) {
+            console.log("Deu ruimn");
+            console.log(response.response);
           }
         })["catch"](function (error) {
           _this.loading = false;
@@ -2452,14 +2450,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     },
     populeUser: function populeUser() {
-      var _this$$props$email, _this$$props$cnpj, _this$$props$mobilePh;
+      var _this$$props$user$ema, _this$$props$user$cnp, _this$$props$user$mob;
+      console.log("Popular");
+      debugger;
       console.log(this.$props);
-      this.userName = this.$props.name;
-      this.email = (_this$$props$email = this.$props.email) !== null && _this$$props$email !== void 0 ? _this$$props$email : "";
-      this.cnpj = (_this$$props$cnpj = this.$props.cnpj) !== null && _this$$props$cnpj !== void 0 ? _this$$props$cnpj : "";
-      this.mobilePhone = (_this$$props$mobilePh = this.$props.mobilePhone) !== null && _this$$props$mobilePh !== void 0 ? _this$$props$mobilePh : "";
+      this.name = this.$props.user.name;
+      this.email = (_this$$props$user$ema = this.$props.user.email) !== null && _this$$props$user$ema !== void 0 ? _this$$props$user$ema : "";
+      this.cnpj = (_this$$props$user$cnp = this.$props.user.cnpj) !== null && _this$$props$user$cnp !== void 0 ? _this$$props$user$cnp : "";
+      this.mobilePhone = (_this$$props$user$mob = this.$props.user.mobile_phone) !== null && _this$$props$user$mob !== void 0 ? _this$$props$user$mob : "";
     },
     validarDocumento: function validarDocumento() {
+      debugger;
       var documento = this.cnpj;
       var cleanDocumento = documento.replace(/\D/g, "");
       var bValido = false;
@@ -2580,6 +2581,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           document.getElementById("btn-finalizar").disabled = false;
         }
       }
+    },
+    validateDueDate: function validateDueDate() {
+      var selectedDate = new Date(this.dueDate);
+      var currentDate = new Date();
+      if (selectedDate > currentDate) {
+        this.$refs.dueDateInput.classList.remove("is-invalid");
+      } else {
+        this.$refs.dueDateInput.classList.add("is-invalid");
+      }
     }
   },
   watch: {
@@ -2593,6 +2603,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   mounted: function mounted() {
     var _this2 = this;
     console.log(this.$props);
+    debugger;
     this.populeUser();
     setTimeout(function () {
       console.log(_this2.$props);
@@ -3488,18 +3499,14 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      readonly: _vm.valid
+      readonly: ""
     },
     domProps: {
-      value: _vm.userName
+      value: _vm.name
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "col-12"
-  }, [_c("label", {
-    attrs: {
-      "for": "cep"
-    }
-  }, [_vm._v("Email")]), _vm._v(" "), _c("input", {
+  }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3528,11 +3535,7 @@ var render = function render() {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                Favor inserir um e-mail válido\n              ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
-  }, [_c("label", {
-    attrs: {
-      "for": "cep"
-    }
-  }, [_vm._v("CPF/CNPJ")]), _vm._v(" "), _c("input", {
+  }, [_c("label", [_vm._v("CPF/CNPJ")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3543,8 +3546,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      required: "",
-      change: _vm.validarDocumento()
+      required: ""
     },
     domProps: {
       value: _vm.cnpj
@@ -3559,11 +3561,7 @@ var render = function render() {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                Favor inserir um CPF/CNPJ válido\n              ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
-  }, [_c("label", {
-    attrs: {
-      "for": "cep"
-    }
-  }, [_vm._v("Celular")]), _vm._v(" "), _c("div", {
+  }, [_c("label", [_vm._v("Celular")]), _vm._v(" "), _c("div", {
     staticClass: "input-group mb-3"
   }, [_vm._m(1), _vm._v(" "), _c("input", {
     directives: [{
@@ -3594,11 +3592,7 @@ var render = function render() {
     staticClass: "invalid-feedback"
   }, [_vm._v("\n                  Favor inserir um Celular Válido\n                ")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-12"
-  }, [_c("label", {
-    attrs: {
-      "for": "cep"
-    }
-  }, [_vm._v("Descrição")]), _vm._v(" "), _c("input", {
+  }, [_c("label", [_vm._v("Descrição")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -3621,6 +3615,35 @@ var render = function render() {
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.description = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "invalid-feedback"
+  }, [_vm._v("\n                Favor inserir uma descrição válida\n              ")])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12"
+  }, [_c("label", [_vm._v("Vencimento")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.dueDate,
+      expression: "dueDate"
+    }],
+    ref: "dueDateInput",
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      required: ""
+    },
+    domProps: {
+      value: _vm.dueDate
+    },
+    on: {
+      change: function change($event) {
+        return _vm.validateDueDate();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.dueDate = $event.target.value;
       }
     }
   }), _vm._v(" "), _c("div", {
@@ -57577,15 +57600,14 @@ window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 /*!****************************************************!*\
   !*** ./resources/js/components/VcFormCheckout.vue ***!
   \****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _VcFormCheckout_vue_vue_type_template_id_1b1d5922___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VcFormCheckout.vue?vue&type=template&id=1b1d5922& */ "./resources/js/components/VcFormCheckout.vue?vue&type=template&id=1b1d5922&");
 /* harmony import */ var _VcFormCheckout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VcFormCheckout.vue?vue&type=script&lang=js& */ "./resources/js/components/VcFormCheckout.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _VcFormCheckout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _VcFormCheckout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -57615,7 +57637,7 @@ component.options.__file = "resources/js/components/VcFormCheckout.vue"
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/VcFormCheckout.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Payment;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,31 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class PaymentsController extends Controller
 {
 
-    public function suaFuncao(Request $request)
-    {
-        // Verificar se o token de API está presente no cabeçalho de autorização
-        try {
-            //code...
-           
-    
-            // Encontrar o usuário com base no token de API
-            $user = User::authUser($request);
-            if ( isset($user)){
-                $retorno = $user->getAsaasPayments();
-                return response()->json($retorno);
-            }
-            return response()->json($user);
-             
-        } catch (\Exception $e) {
-            return response()->json([
-                'msg' => $e->getMessage(),
-                'err'=> $e,
-                'status' => "Error"
-            ],500);
-        }
-        
-    }
-    
     public function index(Request $request)
     {
         //]
@@ -51,7 +27,20 @@ class PaymentsController extends Controller
     public function store(Request $request)
     {
         //
-        return response()->json($request->all());
+        try {
+            $payment = Payment::storePayment($request);
+            
+        } catch (\Exception $e) {
+            return response()->json(['erro' => $e, 'msg' => $e->getMessage()], 500);
+        }
+        $payments = Payment::findUserPayments();
+        return response()->json([
+            'request' => $request->all(),
+            'payments' => $payments,
+            'payment' => $payment,
+            //'user' => $user,
+            'auth' => Auth::user()
+        ]);
     }
 
     /**

@@ -14,12 +14,12 @@
                 <input
                   type="text"
                   class="form-control"
-                  :value="userName"
-                  :readonly="valid"
+                  :value="name"
+                  readonly
                 />
               </div>
               <div class="col-12">
-                <label for="cep">Email</label>
+                <label>Email</label>
                 <input
                   type="email"
                   class="form-control"
@@ -33,21 +33,20 @@
                 </div>
               </div>
               <div class="col-6">
-                <label for="cep">CPF/CNPJ</label>
+                <label>CPF/CNPJ</label>
                 <input
                   type="text"
                   class="form-control"
                   ref="cnpjInput"
                   v-model="cnpj"
                   required
-                  :change="validarDocumento()"
                 />
                 <div class="invalid-feedback">
                   Favor inserir um CPF/CNPJ válido
                 </div>
               </div>
               <div class="col-6">
-                <label for="cep">Celular</label>
+                <label>Celular</label>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <select class="custom-select">
@@ -68,7 +67,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <label for="cep">Descrição</label>
+                <label>Descrição</label>
                 <input
                   type="text"
                   class="form-control"
@@ -76,6 +75,20 @@
                   v-model="description"
                   required
                   @change="validDescription()"
+                />
+                <div class="invalid-feedback">
+                  Favor inserir uma descrição válida
+                </div>
+              </div>
+              <div class="col-12">
+                <label>Vencimento</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  ref="dueDateInput"
+                  v-model="dueDate"
+                  required
+                  @change="validateDueDate()"
                 />
                 <div class="invalid-feedback">
                   Favor inserir uma descrição válida
@@ -136,21 +149,11 @@
     </div>
   </div>
 </template>
-  
-  <script>
+<script>
 export default {
   props: {
-    name: {
-      type: String,
-    },
-    email: {
-      type: String,
-    },
-    cnpj: {
-      type: String,
-    },
-    mobilePhone: {
-      type: String,
+    user: {
+      type: Object,
     },
   },
   data() {
@@ -159,7 +162,7 @@ export default {
       email: "",
       cnpj: "",
       mobilePhone: "",
-
+      dueDate: "",
       valid: false,
       description: "",
       paymentOption: null,
@@ -178,23 +181,29 @@ export default {
         return;
       }
       let parametro = {
-        tipoPag: this.paymentOption,
+        billingType: this.paymentOption,
         value: document.getElementById("span-value").innerText,
-        name: this.userName,
+        name: this.name,
         email: this.email,
         cnpj: this.cnpj,
+        dueDate: this.dueDate,
         mobilePhone: this.mobilePhone,
+        description: this.description,
       };
       try {
         this.$http
           .post("/payments", parametro)
           .then((response) => {
             this.loading = false;
-            console.log("Sucesso ao buscar opções");
+            console.log("Sucesso ao gravar pagamento");
             console.log(response);
 
             if (response.data) {
               this.paymentOptions = response.data;
+            }
+            if (response.response) {
+              console.log("Deu ruimn");
+              console.log(response.response);
             }
           })
           .catch((error) => {
@@ -207,14 +216,17 @@ export default {
       }
     },
     populeUser() {
+      console.log("Popular");
+      debugger;
       console.log(this.$props);
-      this.userName = this.$props.name;
-      this.email = this.$props.email ?? "";
-      this.cnpj = this.$props.cnpj ?? "";
-      this.mobilePhone = this.$props.mobilePhone ?? "";
+      this.name = this.$props.user.name;
+      this.email = this.$props.user.email ?? "";
+      this.cnpj = this.$props.user.cnpj ?? "";
+      this.mobilePhone = this.$props.user.mobile_phone ?? "";
     },
 
     validarDocumento() {
+      debugger;
       let documento = this.cnpj;
       const cleanDocumento = documento.replace(/\D/g, "");
       let bValido = false;
@@ -336,6 +348,16 @@ export default {
         }
       }
     },
+    validateDueDate() {
+      const selectedDate = new Date(this.dueDate);
+      const currentDate = new Date();
+
+      if (selectedDate > currentDate) {
+        this.$refs.dueDateInput.classList.remove("is-invalid");
+      } else {
+        this.$refs.dueDateInput.classList.add("is-invalid");
+      }
+    },
   },
   watch: {
     description() {
@@ -347,7 +369,7 @@ export default {
   },
   mounted() {
     console.log(this.$props);
-
+    debugger;
     this.populeUser();
     setTimeout(() => {
       console.log(this.$props);
@@ -363,4 +385,3 @@ export default {
   },
 };
 </script>
-  

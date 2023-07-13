@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'cnpj','name', 'email', 'password',
+        'cnpj','name', 'email', 'password','customer_id'
     ];
 
     /**
@@ -28,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','customer_id'
+        'password', 'remember_token',
     ];
 
     /**
