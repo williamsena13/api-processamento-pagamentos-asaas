@@ -201,17 +201,21 @@ export default {
         this.$http
           .post("/payments", parametro)
           .then((response) => {
-            this.loading = false;
+            console.log("AQUI");
+            debugger;
+
             console.log("Sucesso ao gravar pagamento");
             console.log(response);
 
             if (response.data) {
-              this.paymentOptions = response.data;
+              let resposta = response.data;
+              localStorage.setItem("retornoCompra", JSON.stringify(resposta));
             }
-            if (response.response) {
-              console.log("Deu ruimn");
-              console.log(response.response);
-            }
+
+            this.$router.push({
+              name: "obrigado",
+              params: { payments: response.data },
+            });
           })
           .catch((error) => {
             this.loading = false;

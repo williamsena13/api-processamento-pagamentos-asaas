@@ -38,4 +38,10 @@ class Payment
             throw new \Exception("Erro ao criar pagamento: " . $e->getMessage());
         }
     }
+
+    public static function getQrCodePayment($payment_id)
+    { 
+        $asaas = new Asaas;
+        return $asaas->getQrCodePayment($payment_id);
+    }
 }

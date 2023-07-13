@@ -79,4 +79,31 @@ class User extends Authenticatable
         $asaas = new Asaas;
         return $asaas->getCustomerPayments($this->customer_id );        
     }
+
+    public function updateUser($request)
+    {
+        if (isset($request->cnpj)){
+            $this->cnpj = $request->cnpj;
+        }
+        if (isset($request->name)){
+            $this->name = $request->name;
+        }
+        if (isset($request->mobilePhone)){
+            $this->mobile_phone = $request->mobilePhone;
+        }
+
+        if (isset($request->customer_id)){
+            $this->customer_id = $request->customer_id;
+            $this->updateClientAsaas();
+        }
+        
+        $this->save();
+        
+    }
+
+    public function updateClientAsaas()
+    {
+        $asaas = new Asaas;
+        $asaas->updateCustomer($this->customer_id, $this->name, $this->cnpj, $this->email, $this->mobilePhone ?? null);
+    }
 }

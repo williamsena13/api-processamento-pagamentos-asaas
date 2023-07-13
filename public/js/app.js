@@ -2430,16 +2430,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       };
       try {
         this.$http.post("/payments", parametro).then(function (response) {
-          _this.loading = false;
+          console.log("AQUI");
+          debugger;
           console.log("Sucesso ao gravar pagamento");
           console.log(response);
           if (response.data) {
-            _this.paymentOptions = response.data;
+            var resposta = response.data;
+            localStorage.setItem("retornoCompra", JSON.stringify(resposta));
           }
-          if (response.response) {
-            console.log("Deu ruimn");
-            console.log(response.response);
-          }
+          _this.$router.push({
+            name: "obrigado",
+            params: {
+              payments: response.data
+            }
+          });
         })["catch"](function (error) {
           _this.loading = false;
           console.log(error);
@@ -3466,6 +3470,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getCobrancas();
+    debugger;
+    var teste = JSON.parse(localStorage.getItem("retornoCompra"));
+    this.cobranca = teste.payment;
+    console.log(teste);
   },
   watch: {
     getLoading: function getLoading() {
@@ -3482,7 +3490,7 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data) {
           debugger;
           var resposta = response.data;
-          _this.cobranca = response.data.data[0];
+          _this.cobranca = response.data.data[1];
           console.log(_this.cobranca);
         }
       })["catch"](function (error) {
@@ -5067,27 +5075,25 @@ var render = function render() {
     staticClass: "container"
   }, [!_vm.loading ? _c("div", {
     staticClass: "pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center"
-  }, [_c("h1", {
+  }, [_c("h2", {
     staticClass: "display-5"
-  }, [_vm._v("Obrigado pela preferência")]), _vm._v(" "), _c("p", {
+  }, [_vm._v("Obrigado pela preferência")]), _vm._v(" "), _c("h3", {
+    staticClass: "display-6"
+  }, [_vm._v("\n      Você escolheu a forma de pagamento: " + _vm._s(_vm.cobranca.formaPagamento) + "\n    ")]), _vm._v(" "), _c("p", {
     staticClass: "lead"
-  }, [_vm._v("\n      Nós agradecemos a preferência! Em breve, o seu produto\n      "), _c("strong", [_vm._v(_vm._s(_vm.cobranca.description))]), _vm._v(" estará disponível.\n    ")]), _vm._v(" "), [[_c("div", [_c("img", {
+  }, [_vm._v("\n      Em breve, o seu produto\n      "), _c("strong", [_vm._v(_vm._s(_vm.cobranca.description))]), _vm._v(" estará disponível. Para isso\n      efetue o pagamento para acessa-lo\n    ")]), _vm._v(" "), _vm.cobranca.billingType == "PIX" ? _c("div", [_c("img", {
     attrs: {
       src: _vm.cobranca.pixQrCode,
       alt: "QRCode do PIX"
     }
-  })])], _vm._v(" "), [_c("div", [_c("vc-form-credit-card")], 1)], _vm._v(" "), [_c("div", [_c("a", {
+  })]) : _vm._e(), _vm._v(" "), _vm.cobranca.billingType == "CREDIT_CARD" ? _c("div", [_c("vc-form-credit-card")], 1) : _vm._e(), _vm._v(" "), _vm.cobranca.billingType == "BOLETO" ? _c("div", [_c("a", {
     attrs: {
       target: "_blank",
       href: _vm.cobranca.bankSlipUrl
     }
-  }, [_vm._v("Baixar Boleto")])])], _vm._v(" "), [_c("div", [_c("vc-payment-options")], 1)], _vm._v(" "), [_vm._m(0)]]], 2) : _vm._e(), _vm._v(" "), _vm.loading ? _c("div", [_c("h1", [_vm._v("Não achei")])]) : _vm._e()]);
+  }, [_vm._v("Baixar Boleto")])]) : _vm._e(), _vm._v(" "), _vm.cobranca.billingType == "UNDEFINED" ? _c("div", [_c("vc-payment-options")], 1) : _vm._e(), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.cobranca))])]) : _vm._e()]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", [_c("h1", [_vm._v("Não tem")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

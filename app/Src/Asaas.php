@@ -185,4 +185,21 @@ class Asaas
         }
     }
 
+    public function getQrCodePayment($paymentId)
+    {
+        $url = $this->url . '/payments/' . $paymentId . '/pixQrCode';
+
+        $response = Http::withHeaders($this->header)->get($url);
+
+            if ($response->failed()) {
+                throw new \Exception('Failed to retrieve QRCode from Asaas API');
+            }  
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return $response;
+    }
+
 }
