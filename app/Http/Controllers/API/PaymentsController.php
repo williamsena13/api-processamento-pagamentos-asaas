@@ -35,11 +35,9 @@ class PaymentsController extends Controller
         }
         $payments = Payment::findUserPayments();
         return response()->json([
-            'request' => $request->all(),
+            'stauts' => 'ok',                    
             'payments' => $payments,
-            'payment' => $payment,
-            //'user' => $user,
-            'auth' => Auth::user()
+            'payment' => $payment,            
         ]);
     }
 

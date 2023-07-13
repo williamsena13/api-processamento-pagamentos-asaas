@@ -1,42 +1,41 @@
 <?php
-
 namespace App\Models;
 
-
 use App\Src\Asaas;
-
 use Illuminate\Support\Facades\Auth;
 
-class Payment  {    
+class Payment
+{
     public static function findUserPayments()
     {
         $user = Auth::user();
         try {
-            $retornoAssas = $user->getAsaasPayments();
-            if ( $retornoAssas["data"] ){
-                return $retornoAssas["data"];                
+            $retornoAsaas = $user->getAsaasPayments();
+            if ($retornoAsaas["data"]) {
+                return $retornoAsaas["data"];
             }
-            return $retornoAssas;
-            
+            return $retornoAsaas;
         } catch (\Exception $e) {
-            dd( "Erro ao carregar", $e);
+            // Lança uma exceção personalizada com a mensagem de erro
+            throw new \Exception("Erro ao carregar pagamentos: " . $e->getMessage());
         }
-        
+    }
 
-    }    
     public static function storePayment($request)
     {
-        $asaas = new Asaas;
-        $payment = $asaas->createPayment(
-            $request->billingType, 
-            Auth::user()->customer_id, 
-            $request->value, 
-            $request->dueDate, 
-            $request->description,
-            null,
-            null,
-            null
-        );
-        return $payment;
+        try {
+            $asaas = new Asaas;
+            $payment = $asaas->createPayment(
+                $request->billingType,
+                Auth::user()->customer_id,
+                $request->value,
+                $request->dueDate,
+                $request->description
+            );
+            return $payment;
+        } catch (\Exception $e) {
+            // Lança uma exceção personalizada com a mensagem de erro
+            throw new \Exception("Erro ao criar pagamento: " . $e->getMessage());
+        }
     }
 }

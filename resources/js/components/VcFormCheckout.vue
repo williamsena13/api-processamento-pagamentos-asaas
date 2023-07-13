@@ -147,6 +147,13 @@
         </button>
       </div>
     </div>
+    <div class="row" style="padding-top: 20px">
+      <div class="col-md-8 justify-center align-items-center">
+        <router-link class="btn btn-primary btn-lg btn-block" to="/obrigado">
+          TESTE
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -216,9 +223,6 @@ export default {
       }
     },
     populeUser() {
-      console.log("Popular");
-      debugger;
-      console.log(this.$props);
       this.name = this.$props.user.name;
       this.email = this.$props.user.email ?? "";
       this.cnpj = this.$props.user.cnpj ?? "";
@@ -226,7 +230,6 @@ export default {
     },
 
     validarDocumento() {
-      debugger;
       let documento = this.cnpj;
       const cleanDocumento = documento.replace(/\D/g, "");
       let bValido = false;
@@ -358,6 +361,25 @@ export default {
         this.$refs.dueDateInput.classList.add("is-invalid");
       }
     },
+    getUser() {
+      this.$http
+        .get("/auth")
+        .then((response) => {
+          this.loading = false;
+
+          if (response.response) {
+            console.log("Deu ruimn");
+            console.log(response.response);
+          }
+          localStorage.setItem("authUser", JSON.stringify(response.data));
+          this.$props.user = response.data;
+          this.populeUser();
+        })
+        .catch((error) => {
+          this.loading = false;
+          console.log(error);
+        });
+    },
   },
   watch: {
     description() {
@@ -368,20 +390,14 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$props);
-    debugger;
-    this.populeUser();
+    //this.populeUser();
+    this.getUser();
     setTimeout(() => {
-      console.log(this.$props);
       $(".btn-pagamento").on("click", () => {
         this.validPaymentOption();
       });
     }, 1000);
     this.$refs.alertPaymentOptions.classList.add("d-none");
-    let teste = document.getElementsByClassName("btn-pagamento");
-    $(".btn-pagamento").click(function () {
-      console.log("CLICI");
-    });
   },
 };
 </script>

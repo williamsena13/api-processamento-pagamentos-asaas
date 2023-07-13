@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-{{ Auth::user()}}
+<router-view></router-view>
+<!--
 <vc-form-checkout :user="{{Auth::user()}}">
 </vc-form-checkout>
+-->
 @endsection

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+    public function authUser(Request $request)
+    {
+        return User::authUser($request);
+    }
     /**
      * Display a listing of the resource.
      *
