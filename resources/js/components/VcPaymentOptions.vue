@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="row justify-content-center" v-if="!loading">
-      <div class="col-3" v-for="option in paymentOptions">
+      <div class="col-4" v-for="option in paymentOptions">
         <button
           type="button"
           :class="
@@ -23,52 +23,6 @@
     </div>
 
     <hr />
-
-    <div class="row" v-if="!loading">
-      <div class="col-6">
-        <div class="container p-0">
-          <h5 class="h8 py-3">Dados do Cartão</h5>
-          <div class="row gx-3">
-            <div class="col-12">
-              <div class="d-flex flex-column">
-                <p class="text mb-1">Nº do Cartão</p>
-                <input
-                  class="form-control mb-3"
-                  type="text"
-                  placeholder="1234 5678 435678"
-                />
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex flex-column">
-                <p class="text mb-1">Vencimento</p>
-                <input
-                  class="form-control mb-3"
-                  type="text"
-                  placeholder="MM/YYYY"
-                />
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex flex-column">
-                <p class="text mb-1">CVV/CVC</p>
-                <input
-                  class="form-control mb-3 pt-2"
-                  type="password"
-                  placeholder="***"
-                />
-              </div>
-            </div>
-            <div class="col-12">
-              <button class="btn btn-block btn-primary">Salvar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="card" v-if="!loading"></div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -82,7 +36,7 @@ export default {
     };
   },
   mounted() {
-    console.log("Component mounted.");
+    localStorage.removeItem("paymentOption");
     this.findPaymentOptions();
   },
   watch: {
@@ -113,6 +67,7 @@ export default {
       console.log("Selecionando");
       console.log(o);
       this.paymentOption = o.id;
+      localStorage.setItem("paymentOption", o.value);
     },
   },
 };
@@ -121,6 +76,6 @@ export default {
 <style>
 .btn-pagamento {
   width: 100%;
-  height: 60px;
+  height: 100%;
 }
 </style>

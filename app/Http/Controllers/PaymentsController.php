@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ErrorResponse;
-use App\Models\Payment;
+
 use Illuminate\Http\Request;
 
 class PaymentsController extends Controller
@@ -19,13 +18,6 @@ class PaymentsController extends Controller
      */
     public function index()
     {
-        //
-        try {            
-            $payments = Payment::findUserPayments();
-                        
-        } catch (\Exception $e) {
-            return new ErrorResponse($e);
-        }
         return view('admin.payments.index');
     }
 

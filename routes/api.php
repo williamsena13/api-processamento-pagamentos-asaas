@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('paymentOptions', 'PaymentOptionController@getPaymentOptions');
 
+
 Route::middleware('auth:api')->get('/payments', 'API\PaymentsController@index');
+Route::middleware('auth:api')->post('/payments', 'API\PaymentsController@store');
 
 
 

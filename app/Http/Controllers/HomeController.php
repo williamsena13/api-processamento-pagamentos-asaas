@@ -29,6 +29,7 @@ class HomeController extends Controller
             dd("FAZER ALGO");
         }
         Auth::user()->generateApiKey();
-        return view('admin.home');
+        //return view('admin.home');
+        return view('admin.checkout');
     }
 }

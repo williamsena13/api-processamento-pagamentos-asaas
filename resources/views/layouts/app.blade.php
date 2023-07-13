@@ -58,7 +58,7 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link" href="{{route('checkout')}}">
                                 Carrinho
                             </a>
                         </li>

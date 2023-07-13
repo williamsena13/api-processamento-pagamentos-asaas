@@ -21,21 +21,10 @@ class PaymentsController extends Controller
             $user = User::authUser($request);
             if ( isset($user)){
                 $retorno = $user->getAsaasPayments();
-                dd( $retorno);
                 return response()->json($retorno);
             }
             return response()->json($user);
-            
-            
-            // Verificar se o usuário existe e autenticá-lo
-            
-            // O usuário está autenticado, agora você pode prosseguir com a lógica da sua função
-            // ...
-            //if( Auth::login( $user )){
-            //    return response()->json(['message' => 'Usuário autenticado com sucesso', 'user'=> Auth::user()], 200);
-            //} else {
-                return response()->json(['não foi possível retornoraros dados', $user, $user->payments],401);
-            //}
+             
         } catch (\Exception $e) {
             return response()->json([
                 'msg' => $e->getMessage(),
@@ -62,6 +51,7 @@ class PaymentsController extends Controller
     public function store(Request $request)
     {
         //
+        return response()->json($request->all());
     }
 
     /**
