@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Src\Asaas;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -52,7 +50,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'cnpj' => ['required', 'string', 'min:11', 'max:14','unique:users'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -67,24 +64,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        try {
-            DB::beginTransaction();
-            $user = User::create([
-                'cnpj' => $data['cnpj'],
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-            ]);
-            $asas = new Asaas;
-            $retorno = $asas->createCustomer( $data['name'], $data['cnpj'], $data['email'] );
-            if( isset($retorno['id'])){
-                $user->setCustomerId($retorno['id']);
-            }
-            DB::commit();
-            return $user;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            dd("Erro ao cadastrar usuário", $e->getMessage(), $e);
-        }
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
     }
 }
