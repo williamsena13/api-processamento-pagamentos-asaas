@@ -11,7 +11,7 @@
       <p class="lead">
         Em breve, o seu produto
         <strong>{{ cobranca.description }}</strong> estará disponível. Para isso
-        efetue o pagamento para acessa-lo
+        efetue o pagamento.
       </p>
       <div v-if="cobranca.billingType == 'PIX'">
         <img :src="cobranca.pixQrCode" alt="QRCode do PIX" />
@@ -21,14 +21,15 @@
       </div>
 
       <div v-if="cobranca.billingType == 'BOLETO'">
-        <a target="_blank" :href="cobranca.bankSlipUrl">Baixar Boleto</a>
+        <p class="lead">
+          Para acessa-lo seu Boleto,
+          <a target="_blank" :href="cobranca.bankSlipUrl">clique aqui</a>
+        </p>
       </div>
 
       <div v-if="cobranca.billingType == 'UNDEFINED'">
         <vc-payment-options></vc-payment-options>
       </div>
-
-      <p>{{ cobranca }}</p>
     </div>
   </div>
 </template>
@@ -43,11 +44,11 @@ export default {
     };
   },
   mounted() {
-    this.getCobrancas();
-    debugger;
-    let teste = JSON.parse(localStorage.getItem("retornoCompra"));
-    this.cobranca = teste.payment;
-    console.log(teste);
+    //this.getCobrancas();
+    console.log(retorno);
+    let retorno = JSON.parse(localStorage.getItem("retornoCompra"));
+    this.cobranca = retorno.payment;
+    console.log(retorno.payment);
   },
   watch: {
     getLoading() {
@@ -63,7 +64,6 @@ export default {
           console.log(response);
           this.loading = false;
           if (response.data) {
-            debugger;
             let resposta = response.data;
             this.cobranca = response.data.data[1];
             console.log(this.cobranca);

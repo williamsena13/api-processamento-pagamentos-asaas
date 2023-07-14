@@ -19,16 +19,8 @@ class PaymentsController extends Controller
         $user = User::authUser($request);
         if ( isset($user)){
             $retorno = $user->getAsaasPayments();
-            for ($i=0; $i < count($retorno['data']) ; $i++) { 
-                
-                $pay = PaymentOption::where('value', $retorno['data'][$i]['billingType'])->select('description')->first();
-
-                $retorno['data'][$i]['formaPagamento']= isset($pay) ? $pay->description : 'ñ';
-
-                if ( $retorno['data'][$i]['billingType'] === 'PIX' ){
-                    $qrCode = Payment::getQrCodePayment($retorno['data'][$i]['id']);
-                    $retorno['data'][$i]['codigoQR'] = $qrCode;
-                }
+            for ($i=0; $i < count($retorno['data']) ; $i++) {                         
+                $retorno['data'][$i]  = PaymentOption::getPaymentOption( $retorno['data'][$i] );                
             }
             return response()->json($retorno);
         }
@@ -40,15 +32,21 @@ class PaymentsController extends Controller
     {
         //
         try {
-            $payment = Payment::storePayment($request);
-            $pay = PaymentOption::where('value', $payment['billingType'])->select('description')->first();
-            $payment['formaPagamento'] = isset($pay) ? $pay->description : "ñ";
-            if ( $payment['formaPagamento'] === 'PIX' ){
-                $qrCode = Payment::getQrCodePayment($payment['id']);
-                $payment['codigoQR'] = $qrCode;
-            }
+            $payment = Payment::storePayment($request);     
+            
+            if ( $payment['status'] == 'erro' ) {
+                return response()->json($payment, 500);
+            } 
+            
         } catch (\Exception $e) {
-            return response()->json(['erro' => $e, 'msg' => $e->getMessage()], 500);
+            return response()->json([ 'status' => 'error','erro' => $e, 'msg' => $e->getMessage(), 'origin' => "Erro ao gravar pagamento"], 500);
+        }
+
+
+        try {
+            $payment  = PaymentOption::getPaymentOption( $payment );
+        } catch (\Exception $e) {
+            return response()->json([ 'status' => 'error','erro' => $e, 'msg' => $e->getMessage(), 'origin' => 'Erro ao buscar formas de pagamento', 'pag' => $payment], 500);
         }
 
         try {
@@ -57,15 +55,14 @@ class PaymentsController extends Controller
             $user->updateUser( $request );
         } catch (\Exception $e) {
             //throw $th;
-            $user = ['erro' => $e, 'msg' => $e->getMessage()];
+            return response()->json([ 'status' => 'error','erro' => $e, 'msg' => $e->getMessage(), 'origin' => 'Erro ao atualizar usuário'], 500);
         }
-        $payments = Payment::findUserPayments();
+        
     
         return response()->json([
-            'stauts' => 'ok',                    
-            'payments' => $payments,
+            'stauts' => 'ok',
             'payment' => $payment,
-            'user'=> $user
+            'user'=> $user,
         ]);
     }// store()
 

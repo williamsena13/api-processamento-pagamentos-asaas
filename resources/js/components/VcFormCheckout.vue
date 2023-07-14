@@ -158,11 +158,7 @@
 </template>
 <script>
 export default {
-  props: {
-    user: {
-      type: Object,
-    },
-  },
+  props: {},
   data() {
     return {
       name: "",
@@ -173,6 +169,7 @@ export default {
       valid: false,
       description: "",
       paymentOption: null,
+      user: Object,
     };
   },
   methods: {
@@ -202,20 +199,37 @@ export default {
           .post("/payments", parametro)
           .then((response) => {
             console.log("AQUI");
-            debugger;
 
             console.log("Sucesso ao gravar pagamento");
             console.log(response);
+            if (response.response) {
+              console.log(response.response);
+              let resposta = response.response.data;
+              console.log(response.response.data);
+              if (resposta.msg) {
+                alert(resposta.msg);
+                return;
+              }
+              if (resposta.errorMessage) {
+                console.log(resposta.errorMessage);
+              }
+              console.log();
+              if (resposta.status == 500) {
+              }
+            }
+
+            if (response.status) {
+              console.log(response.status);
+            }
 
             if (response.data) {
               let resposta = response.data;
+              console.log(resposta);
               localStorage.setItem("retornoCompra", JSON.stringify(resposta));
+              this.$router.push({
+                name: "thanks",
+              });
             }
-
-            this.$router.push({
-              name: "obrigado",
-              params: { payments: response.data },
-            });
           })
           .catch((error) => {
             this.loading = false;
@@ -227,10 +241,10 @@ export default {
       }
     },
     populeUser() {
-      this.name = this.$props.user.name;
-      this.email = this.$props.user.email ?? "";
-      this.cnpj = this.$props.user.cnpj ?? "";
-      this.mobilePhone = this.$props.user.mobile_phone ?? "";
+      this.name = this.user.name;
+      this.email = this.user.email ?? "";
+      this.cnpj = this.user.cnpj ?? "";
+      this.mobilePhone = this.user.mobile_phone ?? "";
     },
 
     validarDocumento() {
@@ -376,7 +390,7 @@ export default {
             console.log(response.response);
           }
           localStorage.setItem("authUser", JSON.stringify(response.data));
-          this.$props.user = response.data;
+          this.user = response.data;
           this.populeUser();
         })
         .catch((error) => {
@@ -396,6 +410,11 @@ export default {
   mounted() {
     //this.populeUser();
     this.getUser();
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 5);
+    this.description = "Compra de Produto " + new Date().toLocaleString();
+    this.dueDate = currentDate.toISOString().split("T")[0];
+    this.$refs.dueDateInput.focus();
     setTimeout(() => {
       $(".btn-pagamento").on("click", () => {
         this.validPaymentOption();

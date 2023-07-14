@@ -174,14 +174,28 @@ class Asaas
         ];
 
         $response = Http::withHeaders($this->header)->post($url, $payload);
+        if ($response->failed()) {
+            $json = $response->body(); // Obtém o JSON
+            $array = json_decode($json, true);
 
+            $erro = $array['errors'][0];
+
+            return [
+                'status' => 'erro',
+                'errorCode' => $response->status(),
+                'errorStatus' =>$erro['code'],
+                'msg' =>  $erro['description'],
+            ];            
+        }    
+        
         if ($response->successful()) {
             return $response->json();
         } else {            
-            return response()->json([
+            return [
+                'status' => 'error',
                 'errorCode' => $response->status(),
                 'errorMessage' => $response->body(),
-            ], 500);
+            ];
         }
     }
 

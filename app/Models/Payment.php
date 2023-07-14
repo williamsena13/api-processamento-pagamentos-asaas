@@ -23,20 +23,17 @@ class Payment
 
     public static function storePayment($request)
     {
-        try {
-            $asaas = new Asaas;
-            $payment = $asaas->createPayment(
-                $request->billingType,
-                Auth::user()->customer_id,
-                $request->value,
-                $request->dueDate,
-                $request->description
-            );
-            return $payment;
-        } catch (\Exception $e) {
-            // Lança uma exceção personalizada com a mensagem de erro
-            throw new \Exception("Erro ao criar pagamento: " . $e->getMessage());
-        }
+        
+        $asaas = new Asaas;
+        $payment = $asaas->createPayment(
+            $request->billingType,
+            Auth::user()->customer_id,
+            $request->value,
+            $request->dueDate,
+            $request->description
+        );
+
+        return $payment;
     }
 
     public static function getQrCodePayment($payment_id)
