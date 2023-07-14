@@ -1,30 +1,44 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Src\Asaas;
+use Illuminate\Support\Facades\Auth;
 
-class Payment extends Model
+class Payment
 {
-    protected $fillable = ['user_id', 'payment_option_id', 'payment_status_id', 'amount'];
-
-    public function user()
+    public static function findUserPayments()
     {
-        return $this->belongsTo(User::class);
+        $user = Auth::user();
+        try {
+            $retornoAsaas = $user->getAsaasPayments();
+            if ($retornoAsaas["data"]) {
+                return $retornoAsaas["data"];
+            }
+            return $retornoAsaas;
+        } catch (\Exception $e) {
+            // Lança uma exceção personalizada com a mensagem de erro
+            throw new \Exception("Erro ao carregar pagamentos: " . $e->getMessage());
+        }
     }
 
-    public function paymentOption()
+    public static function storePayment($request)
     {
-        return $this->belongsTo(PaymentOption::class);
+        
+        $asaas = new Asaas;
+        $payment = $asaas->createPayment(
+            $request->billingType,
+            Auth::user()->customer_id,
+            $request->value,
+            $request->dueDate,
+            $request->description
+        );
+
+        return $payment;
     }
 
-    public function paymentStatus()
-    {
-        return $this->belongsTo(PaymentStatus::class);
-    }
-
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
+    public static function getQrCodePayment($payment_id)
+    { 
+        $asaas = new Asaas;
+        return $asaas->getQrCodePayment($payment_id);
     }
 }
