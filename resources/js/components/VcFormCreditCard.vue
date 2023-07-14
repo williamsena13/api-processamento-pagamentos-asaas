@@ -1,21 +1,48 @@
 <template>
   <div class="credit-card-form">
-    <div class="credit-card-preview">
-      <div class="card-number">{{ maskedCardNumber }}</div>
+    <div class="credit-card-preview col-4">
       <div class="card-holder">{{ cardHolder }}</div>
+      <div class="card-number">{{ maskedCardNumber }}</div>
       <div class="card-expiry">{{ formattedExpiry }}</div>
     </div>
-    <form class="credit-card-inputs">
-      <input type="text" v-model="cardNumber" placeholder="Número do cartão" />
-      <input type="text" v-model="cardHolder" placeholder="Titular do cartão" />
-      <input type="text" v-model="expiryMonth" placeholder="Mês de validade" />
-      <input type="text" v-model="expiryYear" placeholder="Ano de validade" />
-      <input type="text" v-model="cvc" placeholder="CVC" />
+    <form class="credit-card-inputs col-4">
+      <div class="row">
+        <input
+          class="col-12"
+          type="text"
+          v-model="cardHolder"
+          placeholder="Titular do cartão"
+        />
+        <input
+          class="col-8"
+          type="number"
+          v-model="cardNumber"
+          placeholder="Número do cartão"
+        />
+        <input class="col-4" type="number" v-model="cvc" placeholder="CVC" />
+        <input
+          class="col-5"
+          type="number"
+          v-model="expiryMonth"
+          placeholder="Mês de validade"
+        />
+        <input
+          class="col-7"
+          type="number"
+          v-model="expiryYear"
+          placeholder="Ano de validade"
+        />
+      </div>
+      <div style="text-align: center">
+        <button type="button" class="btn btn-secondary btn-block">
+          Block level button
+        </button>
+      </div>
     </form>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   data() {
     return {
@@ -26,21 +53,50 @@ export default {
       cvc: "",
     };
   },
+  watch: {
+    cardNumber() {
+      if (this.cardNumber.length > 16) {
+        this.cardNumber = this.cardNumber.slice(0, 16);
+      }
+    },
+    expiryMonth() {
+      if (this.expiryMonth.length > 2) {
+        this.expiryMonth = this.expiryMonth.slice(0, 2);
+      }
+      if (this.expiryMonth > 12) {
+        this.expiryMonth = "";
+      }
+    },
+    expiryYear() {
+      if (this.expiryYear.length > 4) {
+        this.expiryYear = this.expiryYear.slice(0, 3);
+      }
+      let ano = new Date().getFullYear();
+      if (this.expiryYear.length == 4) {
+        if (Number(ano) > Number(this.expiryYear)) {
+          this.expiryYear = "";
+        }
+      }
+    },
+    cvc() {
+      if (this.cvc.length > 3) {
+        this.cvc = this.cvc.slice(0, 3);
+      }
+    },
+  },
   computed: {
     maskedCardNumber() {
-      // Função para exibir apenas os 4 últimos dígitos do cartão
       const last4Digits = this.cardNumber.slice(-4);
       return `**** **** **** ${last4Digits}`;
     },
     formattedExpiry() {
-      // Função para exibir a data de validade formatada (MM/AA)
       return `${this.expiryMonth}/${this.expiryYear.slice(-2)}`;
     },
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .credit-card-form {
   display: flex;
   align-items: center;
@@ -75,4 +131,3 @@ input {
   border: 1px solid #ccc;
 }
 </style>
-  

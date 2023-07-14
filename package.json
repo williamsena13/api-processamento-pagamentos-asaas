@@ -20,7 +20,7 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
-        "vue": "^2.6",
+        "vue": "^2.7.14",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
@@ -29,9 +29,11 @@
         "chart.js": "^2.9.3",
         "leaflet": "^1.9.3",
         "plotly.js-dist-min": "^2.12.1",
+        "qrcode": "^1.5.3",
         "sweetalert2": "^11.6.15",
         "vue-router": "^3.5.3",
         "vue-sweetalert2": "^5.0.5",
+        "vuejs-paginate": "^2.1.0",
         "vuex": "^3.6.2"
     }
 }

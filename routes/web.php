@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/{any}', 'HomeController@index');
-
 Route::resource('payments', 'PaymentsController');
+
 Route::get('/checkout', 'CheckoutController@getFunction')->name('checkout');
+Route::get('/{any}', 'HomeController@index');

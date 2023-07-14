@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="app">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -14,5 +14,5 @@
         </div>
     </div>
 </div>
-<vc-modal-payments></vc-modal-payments>
+
 @endsection

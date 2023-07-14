@@ -15,16 +15,18 @@ class PaymentsController extends Controller
     public function index(Request $request)
     {
         //]
-        
-        $user = User::authUser($request);
-        if ( isset($user)){
-            $retorno = $user->getAsaasPayments();
-            for ($i=0; $i < count($retorno['data']) ; $i++) {                         
-                $retorno['data'][$i]  = PaymentOption::getPaymentOption( $retorno['data'][$i] );                
+        try {
+            $user = User::authUser($request);
+            if ( isset($user)){
+                $retorno = $user->getAsaasPayments();            
+                return response()->json($retorno);
             }
-            return response()->json($retorno);
+            return response()->json(['status'=>'error', 'msg' => "Usuário não encontrado"], 401);
+            //code...
+        } catch (\Exception $e) {
+            //throw $th;
+            return response()->json([ 'status' => 'error','erro' => $e, 'msg' => $e->getMessage(), 'origin' => 'Erro ao buscar contas do usuário'], 500);
         }
-        return response()->json(['status'=>'error', 'msg' => "Usuário não encontrado"], 401);
     }
 
     
