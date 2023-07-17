@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
   data() {
     return {
@@ -98,7 +99,7 @@ export default {
       loading: false,
     };
   },
-  comments: {},
+  comments: { swal },
   methods: {
     validateField(field) {
       // Lógica de validação para cada campo
@@ -160,7 +161,26 @@ export default {
       this.$http
         .post("/profile", this.user)
         .then((response) => {
-          this.loading = false;
+          debugger;
+          //this.loading = false;
+          if (response.response) {
+            let resposta = response.response;
+            if (resposta.status == 500) {
+              swal(
+                "Erro ao gravar usuário",
+                "Ocorreu um erro ao gravar o usuário, tente novamente!",
+                "error"
+              );
+            }
+          }
+          if (response.data) {
+            this.$router.push("home");
+            swal(
+              "Usuário atualizado com sucesso",
+              "Todos os dados do usuário foram atualizados com sucesso!",
+              "success"
+            );
+          }
         })
         .catch((error) => {
           this.loading = false;
@@ -170,10 +190,50 @@ export default {
       this.$http
         .get("/auth")
         .then((response) => {
+          console.log(response.data);
+          console.log(response.response);
+          if (response.response) {
+            let resposta = response.response;
+            if (resposta.status == 500) {
+              swal({
+                title: "Atenção",
+                text: "Não foi possivel buscar dados do usuário, gostaria de tentar novamente?",
+                icon: "warning",
+                buttons: {
+                  cancel: "Cancelar",
+                  confirm: "Tentar Novamente",
+                },
+              }).then((value) => {
+                if (value) {
+                  this.getUser();
+                } else {
+                  // Ação cancelada
+                  swal(
+                    "Cancelado",
+                    "Você será redirecionado para o Login",
+                    "error"
+                  );
+
+                  window.location.href = "/login";
+                  window.location.reload();
+                  return;
+                }
+              });
+            }
+          }
+
+          debugger;
+          console.log(response);
+          console.log(response.data.mobilePhone);
+          let user = response.data;
           this.user = response.data;
+          this.user.mobilePhone = user.mobile_phone;
+          console.log(this.user.mobilePhone);
+          console.log(this.user.mobilePhone);
           const cepComponent = this.$refs.cepComponent; // Acessando o componente VcDivCep através do ref
           try {
             cepComponent.cep = this.user.cep;
+
             localStorage.setItem("authUser", JSON.stringify(response.data));
           } catch (error) {
             console.log(error);

@@ -16,7 +16,6 @@ import router from './src/services/router';
 
 
 Vue.use(Vuex)
-Vue.use(VueSweetalert2);
   
 const app = new Vue({
   router
@@ -24,4 +23,3 @@ const app = new Vue({
 
 
 import '@fortawesome/fontawesome-free/css/all.css'
-import VueSweetalert2 from "vue-sweetalert2";

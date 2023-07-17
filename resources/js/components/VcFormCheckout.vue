@@ -115,7 +115,7 @@
       <div class="col-md-4 order-md-2 mb-4">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-muted">Sua Cobrança</span>
-          <span class="badge badge-secondary badge-pill">3</span>
+          <span class="badge badge-secondary badge-pill">1</span>
         </h4>
         <ul class="list-group mb-3">
           <li
@@ -244,7 +244,6 @@ export default {
       this.name = this.user.name;
       this.email = this.user.email ?? "";
       this.cnpj = this.user.cnpj ?? "";
-      debugger;
       if (this.user.mobilePhone) {
         this.mobilePhone = this.user.mobilePhone ?? "";
       } else {
