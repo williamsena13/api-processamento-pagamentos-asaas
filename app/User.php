@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Models\Payment;
 use App\Src\Asaas;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,18 +17,14 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'cnpj','name', 'email', 'password','customer_id'
-    ];
+    protected $fillable = ["cnpj", "name", "email", "password", "customer_id"];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ["password", "remember_token"];
 
     /**
      * The attributes that should be cast to native types.
@@ -37,7 +32,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        "email_verified_at" => "datetime",
     ];
 
     public function generateApiKey()
@@ -54,56 +49,115 @@ class User extends Authenticatable
 
     public static function getTokenFromRequest($request)
     {
-        if (!$request->header('Authorization')) {
-            return response()->json(['error' => 'Usuário não identificado'], 401);
+        if (!$request->header("Authorization")) {
+            return response()->json(
+                ["error" => "Usuário não identificado"],
+                401
+            );
         }
-        
+
         // Extrair o token de API do cabeçalho de autorização
-        $apiToken = str_replace('Bearer ', '', $request->header('Authorization'));
-        
+        $apiToken = str_replace(
+            "Bearer ",
+            "",
+            $request->header("Authorization")
+        );
+
         return $apiToken;
     }
 
     public static function authUser($request)
-    { 
-        return User::where('api_token', User::getTokenFromRequest( $request ))->first();
+    {
+        $user = User::where(
+            "api_token",
+            User::getTokenFromRequest($request)
+        )->first();
+
+        return $user;
     }
 
-    public function payments()
+    public function createAsaasUser($data)
     {
-        return $this->hasMany(Payment::class);
+        $asas = new Asaas();
+        $retorno = $asas->createCustomer(
+            $data["name"],
+            $data["cnpj"],
+            $data["email"]
+        );
+        if (isset($retorno["id"])) {
+            $this->setCustomerId($retorno["id"]);
+        }
     }
 
     public function getAsaasPayments()
     {
-        $asaas = new Asaas;
-        return $asaas->getCustomerPayments($this->customer_id );        
+        $asaas = new Asaas();
+        return $asaas->getCustomerPayments($this->customer_id);
     }
 
     public function updateUser($request)
     {
-        if (isset($request->cnpj)){
-            $this->cnpj = $request->cnpj;
+        try {
+            if (isset($request->cnpj)) {
+                $this->cnpj = $request->cnpj;
+            }
+            if (isset($request->name)) {
+                $this->name = $request->name;
+            }
+            if (isset($request->mobilePhone)) {
+                $this->mobile_phone = $request->mobilePhone;
+                $this->save();
+            }
+    
+            if (isset($request->customer_id)) {
+                $this->customer_id = $request->customer_id;
+    
+                $this->updateClientAsaas(
+                    $request->address ?? null,
+                    $request->addressNumber ?? null,
+                    $request->province ?? null,
+                    $request->postalCode ?? null,
+                    $request->city ?? null,
+                    $request->state ?? null,
+                    $request->country ?? null
+                );
+            }
+    
+            $this->save();
+        } catch (\Exception $e) {
+            throw new \Exception("Não foi possível atualizar usuário Erro:" . $e->getMessage());
         }
-        if (isset($request->name)){
-            $this->name = $request->name;
-        }
-        if (isset($request->mobilePhone)){
-            $this->mobile_phone = $request->mobilePhone;
-        }
-
-        if (isset($request->customer_id)){
-            $this->customer_id = $request->customer_id;
-            $this->updateClientAsaas();
-        }
-        
-        $this->save();
         
     }
 
-    public function updateClientAsaas()
-    {
-        $asaas = new Asaas;
-        $asaas->updateCustomer($this->customer_id, $this->name, $this->cnpj, $this->email, $this->mobilePhone ?? null);
+    public function updateClientAsaas(
+        $address,
+        $addressNumber,
+        $province,
+        $postalCode,
+        $city,
+        $state,
+        $country
+    ) {
+        try {
+            $asaas = new Asaas();
+            $asaas->updateCustomer(
+                $this->customer_id,
+                $this->name,
+                $this->cnpj,
+                $this->email,
+                $this->mobile_phone,
+                $address,
+                $addressNumber,
+                $province,
+                $postalCode,
+                $city,
+                $state,
+                $country
+            );
+        } catch (\Exception $e) {
+            throw new \Exception("Não foi possível atualizar usuário Asaas Erro:" . $e->getMessage());
+        }
+       
     }
 }

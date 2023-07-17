@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/payments', 'API\PaymentsController@index');
 Route::middleware('auth:api')->post('/payments', 'API\PaymentsController@store');
 Route::middleware('auth:api')->get('/auth', 'API\AuthController@authUser');
 
+Route::middleware('auth:api')->post('/profile', 'API\AuthController@updateProfile');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

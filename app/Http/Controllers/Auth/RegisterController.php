@@ -75,11 +75,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
             ]);
-            $asas = new Asaas;
-            $retorno = $asas->createCustomer( $data['name'], $data['cnpj'], $data['email'] );
-            if( isset($retorno['id'])){
-                $user->setCustomerId($retorno['id']);
-            }
+            $user->createAsaasUser($data);
             DB::commit();
             return $user;
         } catch (\Exception $e) {

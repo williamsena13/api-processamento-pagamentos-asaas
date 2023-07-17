@@ -29,7 +29,6 @@ class PaymentsController extends Controller
         }
     }
 
-    
     public function store(Request $request)
     {
         //
@@ -67,19 +66,4 @@ class PaymentsController extends Controller
             'user'=> $user,
         ]);
     }// store()
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
-    }
 }

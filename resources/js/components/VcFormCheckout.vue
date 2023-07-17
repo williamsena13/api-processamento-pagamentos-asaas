@@ -244,7 +244,12 @@ export default {
       this.name = this.user.name;
       this.email = this.user.email ?? "";
       this.cnpj = this.user.cnpj ?? "";
-      this.mobilePhone = this.user.mobile_phone ?? "";
+      debugger;
+      if (this.user.mobilePhone) {
+        this.mobilePhone = this.user.mobilePhone ?? "";
+      } else {
+        this.mobilePhone = this.user.mobile_phone ?? "";
+      }
     },
 
     validarDocumento() {

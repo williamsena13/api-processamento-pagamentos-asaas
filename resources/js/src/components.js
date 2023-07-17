@@ -15,3 +15,5 @@ Vue.component('vc-form-checkout', require('../components/VcFormCheckout.vue').de
 Vue.component('vc-form-credit-card', require('../components/VcFormCreditCard.vue').default);
 
 Vue.component('pix-qrcode', require('../components/PixQRCode.vue').default);
+
+Vue.component('vc-div-cep', require('../components/VcDivCep').default);

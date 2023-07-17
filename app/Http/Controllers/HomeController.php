@@ -18,18 +18,20 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+  
     public function index()
     {
         if ( empty(Auth::user()->customer_id) ){
-            dd("FAZER ALGO");
+            
+            Auth::user()->createAsaasUser(Auth::user());
         }
         Auth::user()->generateApiKey();
         //return view('admin.home');
         return view('admin.checkout');
+    }
+
+    public function profile()
+    {
+        return view('admin.home');
     }
 }
