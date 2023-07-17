@@ -2795,6 +2795,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2844,6 +2847,49 @@ __webpack_require__.r(__webpack_exports__);
     formattedExpiry: function formattedExpiry() {
       return "".concat(this.expiryMonth, "/").concat(this.expiryYear.slice(-2));
     }
+  },
+  methods: {
+    finalizarCompra: function finalizarCompra() {
+      var parametro = {
+        paymentId: localStorage.getItem("paymentId"),
+        cardNumber: this.cardNumber,
+        cardHolder: this.cardHolder,
+        expiryMonth: this.expiryMonth,
+        expiryYear: this.expiryYear,
+        cvc: this.cvc
+      };
+      this.$http.post("/paycharge", parametro).then(function (response) {
+        console.log("Sucesso");
+        console.log(response);
+        if (response.response) {
+          var resposta = response.response;
+          debugger;
+          if (resposta.status == 500) {
+            try {
+              console.log(resposta.data);
+              var teste = JSON.parse(resposta.data.msg);
+              console.log(teste);
+            } catch (error) {}
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()(resposta.data.msg, "", "error");
+          }
+          if (resposta.status == 400) {
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()(resposta.data, "", "warning");
+          }
+          return;
+        }
+        if (response.data) {
+          var _resposta = response.data;
+          if (_resposta.status == "error") {
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Erro ao pagar", _resposta.msg, _resposta.status);
+            return;
+          }
+          console.log(response.data);
+        }
+      })["catch"](function (error) {
+        console.log("error");
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -2876,6 +2922,7 @@ __webpack_require__.r(__webpack_exports__);
     //this.getCobrancas();
     var retorno = JSON.parse(localStorage.getItem("retornoCompra"));
     this.cobranca = retorno.payment;
+    localStorage.setItem("paymentId", this.cobranca.id);
     console.log(retorno.payment);
     if (this.cobranca.billingType == "PIX") {
       setTimeout(function () {
@@ -4530,22 +4577,23 @@ var render = function render() {
         _vm.expiryYear = $event.target.value;
       }
     }
-  })]), _vm._v(" "), _vm._m(0)])]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
+  })]), _vm._v(" "), _c("div", {
     staticStyle: {
       "text-align": "center"
     }
   }, [_c("button", {
-    staticClass: "btn btn-secondary btn-block",
+    staticClass: "btn btn-outline-success btn-block",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.finalizarCompra();
+      }
     }
-  }, [_vm._v("\n        Block level button\n      ")])]);
-}];
+  }, [_vm._v("\n        Finalizar Compra\n      ")])])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -4588,7 +4636,7 @@ var render = function render() {
       target: "_blank",
       href: _vm.cobranca.invoiceUrl
     }
-  }, [_vm._v("clique aqui")])])]) : _vm._e(), _vm._v(" "), _vm.cobranca.billingType == "BOLETO" ? _c("div", [_c("p", {
+  }, [_vm._v("clique aqui")])]), _vm._v(" "), _c("vc-form-credit-card")], 1) : _vm._e(), _vm._v(" "), _vm.cobranca.billingType == "BOLETO" ? _c("div", [_c("p", {
     staticClass: "lead"
   }, [_vm._v("\n        Para acessa-lo seu Boleto,\n        "), _c("a", {
     attrs: {

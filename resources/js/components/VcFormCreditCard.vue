@@ -34,8 +34,12 @@
         />
       </div>
       <div style="text-align: center">
-        <button type="button" class="btn btn-secondary btn-block">
-          Block level button
+        <button
+          type="button"
+          class="btn btn-outline-success btn-block"
+          @click="finalizarCompra()"
+        >
+          Finalizar Compra
         </button>
       </div>
     </form>
@@ -43,6 +47,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
   data() {
     return {
@@ -91,6 +96,52 @@ export default {
     },
     formattedExpiry() {
       return `${this.expiryMonth}/${this.expiryYear.slice(-2)}`;
+    },
+  },
+  methods: {
+    finalizarCompra() {
+      let parametro = {
+        paymentId: localStorage.getItem("paymentId"),
+        cardNumber: this.cardNumber,
+        cardHolder: this.cardHolder,
+        expiryMonth: this.expiryMonth,
+        expiryYear: this.expiryYear,
+        cvc: this.cvc,
+      };
+      this.$http
+        .post("/paycharge", parametro)
+        .then((response) => {
+          console.log("Sucesso");
+          console.log(response);
+          if (response.response) {
+            let resposta = response.response;
+            debugger;
+            if (resposta.status == 500) {
+              try {
+                console.log(resposta.data);
+                let teste = JSON.parse(resposta.data.msg);
+                console.log(teste);
+              } catch (error) {}
+              swal(resposta.data.msg, "", "error");
+            }
+            if (resposta.status == 400) {
+              swal(resposta.data, "", "warning");
+            }
+            return;
+          }
+          if (response.data) {
+            let resposta = response.data;
+            if (resposta.status == "error") {
+              swal("Erro ao pagar", resposta.msg, resposta.status);
+              return;
+            }
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log("error");
+          console.log(error);
+        });
     },
   },
 };

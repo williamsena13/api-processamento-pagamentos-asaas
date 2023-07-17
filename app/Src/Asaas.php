@@ -37,7 +37,7 @@ class Asaas
             $erro = $array['errors'][0];
 
             return [
-                'status' => 'erro',
+                'status' => 'error',
                 'errorCode' => $this->response->status(),
                 'errorStatus' =>$erro['code'],
                 'msg' =>  $erro['description'],
@@ -210,5 +210,38 @@ class Asaas
 
         return $this->validaRetorno();
     }
+
+    public function payCredit($paymentId, $cardHolder, $cardNumber, $expiryMonth, $expiryYear, $cvc)
+    {
+        $url = "{$this->url}/payments/{$paymentId}/payWithCreditCard";
+    
+        $creditCard = [
+            'holderName' => $cardHolder,
+            'number' => $cardNumber,
+            'expiryMonth' => $expiryMonth,
+            'expiryYear' => $expiryYear,
+            'ccv' => $cvc
+        ];
+    
+        $payload = [
+            'creditCard' => $creditCard
+        ];
+    
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'access_token' => env('ASAAS_API_KEY')
+        ];
+    
+        $client = new \GuzzleHttp\Client();
+    
+        $this->response = $client->request('POST', $url, [
+            'headers' => $headers,
+            'json' => $payload
+        ]);
+    
+        return $this->validaRetorno();
+    }
+    
 
 };

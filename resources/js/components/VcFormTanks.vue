@@ -24,9 +24,7 @@
           Continue sua compra aqui,
           <a target="_blank" :href="cobranca.invoiceUrl">clique aqui</a>
         </p>
-        <!--
         <vc-form-credit-card></vc-form-credit-card>
-        -->
       </div>
 
       <div v-if="cobranca.billingType == 'BOLETO'">
@@ -63,6 +61,7 @@ export default {
     //this.getCobrancas();
     let retorno = JSON.parse(localStorage.getItem("retornoCompra"));
     this.cobranca = retorno.payment;
+    localStorage.setItem("paymentId", this.cobranca.id);
     console.log(retorno.payment);
     if (this.cobranca.billingType == "PIX") {
       setTimeout(() => {
