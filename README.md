@@ -33,30 +33,10 @@ Antes de executar o projeto, verifique se você possui os seguintes requisitos:
 
 - PHP (versão 7.2.5)
 - Laravel (versão 7.0)
-- Banco de dados relacional (recomendado: MySQL)
-
-"@popperjs/core": "^2.9.3",
-        "axios": "^0.21.4",
-        "cross-env": "^7.0.3",
-        "jquery": "^3.2",
-        "laravel-mix": "^5.0.1",
-        "lodash": "^4.17.13",
-        "popper.js": "^1.12",
-        "resolve-url-loader": "^2.3.1",
-        "sass": "^1.15.2",
-        "sass-loader": "^8.0.0",
-        "vue": "^2.7.14",
-        "vue-template-compiler": "^2.6.10"
-        "@fortawesome/fontawesome-free": "^5.15.4",
-        "bootstrap": "^4.6.2",
-        "chart.js": "^2.9.3",
-        "leaflet": "^1.9.3",
-        "plotly.js-dist-min": "^2.12.1",
-        "qrcode": "^1.5.3",
-        "sweetalert": "^2.1.2",
-        "vue-router": "^3.5.3",
-        "vuejs-paginate": "^2.1.0",
-        "vuex": "^3.6.2"
+- Vue (versão 2.7.14)
+- Bootsatrap (versão 4.6.2)
+- Sweetalert (versão 2.1.2)
+- Banco de dados relacional (recomendado: MariaDB)
 
 ## Executando o Projeto
 
