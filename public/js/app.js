@@ -4374,19 +4374,7 @@ var render = function render() {
     on: {
       click: _vm.finalizarVenda
     }
-  }, [_vm._v("\n        Finalizar\n      ")])])]), _vm._v(" "), _c("div", {
-    staticClass: "row",
-    staticStyle: {
-      "padding-top": "20px"
-    }
-  }, [_c("div", {
-    staticClass: "col-md-8 justify-center align-items-center"
-  }, [_c("router-link", {
-    staticClass: "btn btn-primary btn-lg btn-block",
-    attrs: {
-      to: "/obrigado"
-    }
-  }, [_vm._v("\n        TESTE\n      ")])], 1)])]);
+  }, [_vm._v("\n        Finalizar\n      ")])])]), _vm._v(" "), _vm._m(3)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4423,21 +4411,32 @@ var staticRenderFns = [function () {
     staticClass: "list-group-item d-flex justify-content-between lh-condensed"
   }, [_c("div", [_c("h6", {
     staticClass: "my-0"
-  }, [_vm._v("Produto"), _c("a", {
+  }, [_vm._v("Processamento de Pagamento"), _c("a", {
     attrs: {
       href: ""
     }
   })]), _vm._v(" "), _c("small", {
     staticClass: "text-muted"
-  }, [_vm._v("Exemplo de descrição")])]), _vm._v(" "), _c("span", {
+  }, [_vm._v("Plataforma de processamento de pagamentos\n            ")])]), _vm._v(" "), _c("span", {
     staticClass: "text-muted"
-  }, [_vm._v("R$10")])]), _vm._v(" "), _c("li", {
+  }, [_vm._v("R$500,00")])]), _vm._v(" "), _c("li", {
     staticClass: "list-group-item d-flex justify-content-between"
   }, [_c("span", [_vm._v("Total (R$)")]), _vm._v(" "), _c("strong", [_vm._v("R$"), _c("span", {
     attrs: {
       id: "span-value"
     }
-  }, [_vm._v("20,00")])])])])]);
+  }, [_vm._v("500,00")])])])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row",
+    staticStyle: {
+      "padding-top": "20px"
+    }
+  }, [_c("div", {
+    staticClass: "col-md-8 justify-center align-items-center"
+  })]);
 }];
 render._withStripped = true;
 
@@ -5606,7 +5605,7 @@ var render = function render() {
     attrs: {
       to: "/checkout"
     }
-  }, [_vm._v(" Finalizar Compra ")])], 1), _vm._v(" "), _c("p", [_vm._v("\n                Ao clicar, você será redirecionado para uma tela de checkout,\n                onde alguns dados já cadastrados serão preenchidos\n                automaticamente. Será necessário selecionar uma forma de\n                pagamento.\n              ")]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Boleto", o usuário\n                será redirecionado para uma tela de "Obrigado", onde poderá\n                fazer o download do boleto.\n              ')]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Cartão de Crédito",\n                será necessário preencher o endereço do usuário. Ao confirmar\n                o pagamento, o usuário será direcionado para a tela de\n                "Obrigado".\n              ')]), _vm._v(" "), _c("p")]), _vm._v(" "), _c("div", {
+  }, [_vm._v(" Finalizar Compra ")])], 1), _vm._v(" "), _c("p", [_vm._v("\n                Ao clicar, você será redirecionado para uma tela de checkout,\n                onde alguns dados já cadastrados serão preenchidos\n                automaticamente. Será necessário selecionar uma forma de\n                pagamento.\n              ")]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "PIX", o usuário será\n                redirecionado para uma tela de "Obrigado", onde será exibido o\n                QRCode para efetuar o pagamento.\n              ')]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Boleto", o usuário\n                será redirecionado para uma tela de "Obrigado", onde poderá\n                fazer o download do boleto.\n              ')]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Cartão de Crédito",\n                será necessário preencher o endereço do usuário. Ao confirmar\n                o pagamento, o usuário será direcionado para a tela de\n                "Obrigado".\n              ')]), _vm._v(" "), _c("p")]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("h4", [_vm._v("Tecnologias Utilizadas")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("router-link", {
     staticClass: "btn btn-primary btn-lg btn-block",
@@ -63310,8 +63309,8 @@ router.beforeEach(function (to, from, next) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\correcao-api-asaas\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\correcao-api-asaas\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\api-processamento-pagamentos-asaas\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\api-processamento-pagamentos-asaas\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

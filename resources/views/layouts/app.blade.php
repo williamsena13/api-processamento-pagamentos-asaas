@@ -18,7 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @php header('Access-Control-Allow-Origin: *'); @endphp
+    @yield('css')
 </head>
 <body>
     <div id="app">

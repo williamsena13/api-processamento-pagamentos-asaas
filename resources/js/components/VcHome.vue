@@ -25,6 +25,11 @@
                   pagamento.
                 </p>
                 <p>
+                  Se a forma de pagamento selecionada for "PIX", o usuário será
+                  redirecionado para uma tela de "Obrigado", onde será exibido o
+                  QRCode para efetuar o pagamento.
+                </p>
+                <p>
                   Se a forma de pagamento selecionada for "Boleto", o usuário
                   será redirecionado para uma tela de "Obrigado", onde poderá
                   fazer o download do boleto.

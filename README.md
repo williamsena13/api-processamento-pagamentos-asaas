@@ -31,9 +31,32 @@ O sistema foi desenvolvido com as seguintes funcionalidades:
 
 Antes de executar o projeto, verifique se você possui os seguintes requisitos:
 
-- PHP (versão X.X.X)
-- Laravel (versão X.X.X)
+- PHP (versão 7.2.5)
+- Laravel (versão 7.0)
 - Banco de dados relacional (recomendado: MySQL)
+
+"@popperjs/core": "^2.9.3",
+        "axios": "^0.21.4",
+        "cross-env": "^7.0.3",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.1",
+        "lodash": "^4.17.13",
+        "popper.js": "^1.12",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.15.2",
+        "sass-loader": "^8.0.0",
+        "vue": "^2.7.14",
+        "vue-template-compiler": "^2.6.10"
+        "@fortawesome/fontawesome-free": "^5.15.4",
+        "bootstrap": "^4.6.2",
+        "chart.js": "^2.9.3",
+        "leaflet": "^1.9.3",
+        "plotly.js-dist-min": "^2.12.1",
+        "qrcode": "^1.5.3",
+        "sweetalert": "^2.1.2",
+        "vue-router": "^3.5.3",
+        "vuejs-paginate": "^2.1.0",
+        "vuex": "^3.6.2"
 
 ## Executando o Projeto
 
@@ -108,8 +131,16 @@ php artisan serve
 12. Acesse o aplicativo em seu navegador:
 
 ```
-http://localhost:8000
+http://localhost:8000/register
 ```
+
+13. Faça o [cadastro](http://localhost:8000/register) de seu usuário.
+
+14. [Finalize](http://localhost:8000/checkout) a simulação da compra 
+
+14.1 Se a forma de pagamento selecionada for "PIX", o usuário será redirecionado para uma tela de "Obrigado", onde será disponibilizado o QRCode para o pagamento.
+14.2 Se a forma de pagamento selecionada for "Boleto", o usuário será redirecionado para uma tela de "Obrigado", onde poderá fazer o download do boleto.
+14.3 Se a forma de pagamento selecionada for "Cartão de Crédito", será necessário preencher o endereço do usuário. Ao confirmar o pagamento, o usuário será direcionado para a tela de "Obrigado".
 
 ## Autor
 
