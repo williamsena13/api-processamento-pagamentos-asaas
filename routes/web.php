@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('payments', 'PaymentsController');
+Route::get('profile', 'HomeController@profile')->name('profile');
+
+//Route::get('/checkout', 'CheckoutController@getFunction')->name('checkout');
+Route::get('/{any}', 'HomeController@index');
