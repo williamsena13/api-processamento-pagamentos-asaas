@@ -10371,7 +10371,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\r\n/* Estilos opcionais para o componente */\r\n", ""]);
+exports.push([module.i, "\n/* Estilos opcionais para o componente */\n", ""]);
 
 // exports
 
@@ -10390,7 +10390,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.credit-card-form[data-v-3066d1f6] {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 20px;\n}\n.credit-card-preview[data-v-3066d1f6] {\r\n  width: 200px;\r\n  height: 120px;\r\n  background-color: #f0f0f0;\r\n  border-radius: 6px;\r\n  padding: 10px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\n}\n.card-number[data-v-3066d1f6] {\r\n  font-size: 16px;\r\n  font-weight: bold;\n}\n.credit-card-inputs[data-v-3066d1f6] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px;\n}\ninput[data-v-3066d1f6] {\r\n  padding: 8px;\r\n  border-radius: 4px;\r\n  border: 1px solid #ccc;\n}\r\n", ""]);
+exports.push([module.i, "\n.credit-card-form[data-v-3066d1f6] {\n  display: flex;\n  align-items: center;\n  gap: 20px;\n}\n.credit-card-preview[data-v-3066d1f6] {\n  width: 200px;\n  height: 120px;\n  background-color: #f0f0f0;\n  border-radius: 6px;\n  padding: 10px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n}\n.card-number[data-v-3066d1f6] {\n  font-size: 16px;\n  font-weight: bold;\n}\n.credit-card-inputs[data-v-3066d1f6] {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\ninput[data-v-3066d1f6] {\n  padding: 8px;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n}\n", ""]);
 
 // exports
 
@@ -10409,7 +10409,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-header {\r\n  background-color: transparent;\r\n  border-bottom: 1px solid rgba(0, 0, 0, 0.125);\r\n  padding: 0.75rem 1.25rem;\r\n  position: relative;\r\n  border-top-left-radius: 0.25rem;\r\n  border-top-right-radius: 0.25rem;\n}\n.div-carregando {\r\n  width: 100%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  line-height: 50px;\r\n  text-align: center;\r\n  margin-top: 50px; /* para afastar um pouco da tabela */\n}\r\n", ""]);
+exports.push([module.i, "\n.card-header {\n  background-color: transparent;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.125);\n  padding: 0.75rem 1.25rem;\n  position: relative;\n  border-top-left-radius: 0.25rem;\n  border-top-right-radius: 0.25rem;\n}\n.div-carregando {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  line-height: 50px;\n  text-align: center;\n  margin-top: 50px; /* para afastar um pouco da tabela */\n}\n", ""]);
 
 // exports
 
@@ -10466,7 +10466,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.is-invalid {\r\n  border-color: #dc3545;\n}\n.invalid-feedback {\r\n  color: #dc3545;\r\n  margin-top: 0.25rem;\r\n  font-size: 80%;\n}\r\n", ""]);
+exports.push([module.i, "\n.is-invalid {\n  border-color: #dc3545;\n}\n.invalid-feedback {\n  color: #dc3545;\n  margin-top: 0.25rem;\n  font-size: 80%;\n}\n", ""]);
 
 // exports
 
@@ -63310,8 +63310,8 @@ router.beforeEach(function (to, from, next) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\api-processamento-pagamentos-asaas\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\api-processamento-pagamentos-asaas\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\correcao-api-asaas\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\correcao-api-asaas\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @php header('Access-Control-Allow-Origin: *'); @endphp
 </head>
 <body>
     <div id="app">
@@ -33,7 +34,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if( Auth::user() )
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('payments.index') }}">Cobraças</a>
+                        </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -77,6 +85,7 @@
         </nav>
 
         <main class="py-4">
+            <input type="hidden" id="edit-api-key" value="{{Auth::user() ? Auth::user()->api_token : ''}}">
             @yield('content')
         </main>
     </div>
