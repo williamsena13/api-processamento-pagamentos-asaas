@@ -4374,19 +4374,7 @@ var render = function render() {
     on: {
       click: _vm.finalizarVenda
     }
-  }, [_vm._v("\n        Finalizar\n      ")])])]), _vm._v(" "), _c("div", {
-    staticClass: "row",
-    staticStyle: {
-      "padding-top": "20px"
-    }
-  }, [_c("div", {
-    staticClass: "col-md-8 justify-center align-items-center"
-  }, [_c("router-link", {
-    staticClass: "btn btn-primary btn-lg btn-block",
-    attrs: {
-      to: "/obrigado"
-    }
-  }, [_vm._v("\n        TESTE\n      ")])], 1)])]);
+  }, [_vm._v("\n        Finalizar\n      ")])])]), _vm._v(" "), _vm._m(3)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -4423,21 +4411,32 @@ var staticRenderFns = [function () {
     staticClass: "list-group-item d-flex justify-content-between lh-condensed"
   }, [_c("div", [_c("h6", {
     staticClass: "my-0"
-  }, [_vm._v("Produto"), _c("a", {
+  }, [_vm._v("Processamento de Pagamento"), _c("a", {
     attrs: {
       href: ""
     }
   })]), _vm._v(" "), _c("small", {
     staticClass: "text-muted"
-  }, [_vm._v("Exemplo de descrição")])]), _vm._v(" "), _c("span", {
+  }, [_vm._v("Plataforma de processamento de pagamentos\n            ")])]), _vm._v(" "), _c("span", {
     staticClass: "text-muted"
-  }, [_vm._v("R$10")])]), _vm._v(" "), _c("li", {
+  }, [_vm._v("R$500,00")])]), _vm._v(" "), _c("li", {
     staticClass: "list-group-item d-flex justify-content-between"
   }, [_c("span", [_vm._v("Total (R$)")]), _vm._v(" "), _c("strong", [_vm._v("R$"), _c("span", {
     attrs: {
       id: "span-value"
     }
-  }, [_vm._v("20,00")])])])])]);
+  }, [_vm._v("500,00")])])])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "row",
+    staticStyle: {
+      "padding-top": "20px"
+    }
+  }, [_c("div", {
+    staticClass: "col-md-8 justify-center align-items-center"
+  })]);
 }];
 render._withStripped = true;
 
@@ -5606,7 +5605,7 @@ var render = function render() {
     attrs: {
       to: "/checkout"
     }
-  }, [_vm._v(" Finalizar Compra ")])], 1), _vm._v(" "), _c("p", [_vm._v("\n                Ao clicar, você será redirecionado para uma tela de checkout,\n                onde alguns dados já cadastrados serão preenchidos\n                automaticamente. Será necessário selecionar uma forma de\n                pagamento.\n              ")]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Boleto", o usuário\n                será redirecionado para uma tela de "Obrigado", onde poderá\n                fazer o download do boleto.\n              ')]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Cartão de Crédito",\n                será necessário preencher o endereço do usuário. Ao confirmar\n                o pagamento, o usuário será direcionado para a tela de\n                "Obrigado".\n              ')]), _vm._v(" "), _c("p")]), _vm._v(" "), _c("div", {
+  }, [_vm._v(" Finalizar Compra ")])], 1), _vm._v(" "), _c("p", [_vm._v("\n                Ao clicar, você será redirecionado para uma tela de checkout,\n                onde alguns dados já cadastrados serão preenchidos\n                automaticamente. Será necessário selecionar uma forma de\n                pagamento.\n              ")]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "PIX", o usuário será\n                redirecionado para uma tela de "Obrigado", onde será exibido o\n                QRCode para efetuar o pagamento.\n              ')]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Boleto", o usuário\n                será redirecionado para uma tela de "Obrigado", onde poderá\n                fazer o download do boleto.\n              ')]), _vm._v(" "), _c("p", [_vm._v('\n                Se a forma de pagamento selecionada for "Cartão de Crédito",\n                será necessário preencher o endereço do usuário. Ao confirmar\n                o pagamento, o usuário será direcionado para a tela de\n                "Obrigado".\n              ')]), _vm._v(" "), _c("p")]), _vm._v(" "), _c("div", {
     staticClass: "col-6"
   }, [_c("h4", [_vm._v("Tecnologias Utilizadas")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("router-link", {
     staticClass: "btn btn-primary btn-lg btn-block",
@@ -10371,7 +10370,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\r\n/* Estilos opcionais para o componente */\r\n", ""]);
+exports.push([module.i, "\n/* Estilos opcionais para o componente */\n", ""]);
 
 // exports
 
@@ -10390,7 +10389,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.credit-card-form[data-v-3066d1f6] {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 20px;\n}\n.credit-card-preview[data-v-3066d1f6] {\r\n  width: 200px;\r\n  height: 120px;\r\n  background-color: #f0f0f0;\r\n  border-radius: 6px;\r\n  padding: 10px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\n}\n.card-number[data-v-3066d1f6] {\r\n  font-size: 16px;\r\n  font-weight: bold;\n}\n.credit-card-inputs[data-v-3066d1f6] {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px;\n}\ninput[data-v-3066d1f6] {\r\n  padding: 8px;\r\n  border-radius: 4px;\r\n  border: 1px solid #ccc;\n}\r\n", ""]);
+exports.push([module.i, "\n.credit-card-form[data-v-3066d1f6] {\n  display: flex;\n  align-items: center;\n  gap: 20px;\n}\n.credit-card-preview[data-v-3066d1f6] {\n  width: 200px;\n  height: 120px;\n  background-color: #f0f0f0;\n  border-radius: 6px;\n  padding: 10px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n}\n.card-number[data-v-3066d1f6] {\n  font-size: 16px;\n  font-weight: bold;\n}\n.credit-card-inputs[data-v-3066d1f6] {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\ninput[data-v-3066d1f6] {\n  padding: 8px;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n}\n", ""]);
 
 // exports
 
@@ -10409,7 +10408,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.card-header {\r\n  background-color: transparent;\r\n  border-bottom: 1px solid rgba(0, 0, 0, 0.125);\r\n  padding: 0.75rem 1.25rem;\r\n  position: relative;\r\n  border-top-left-radius: 0.25rem;\r\n  border-top-right-radius: 0.25rem;\n}\n.div-carregando {\r\n  width: 100%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  line-height: 50px;\r\n  text-align: center;\r\n  margin-top: 50px; /* para afastar um pouco da tabela */\n}\r\n", ""]);
+exports.push([module.i, "\n.card-header {\n  background-color: transparent;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.125);\n  padding: 0.75rem 1.25rem;\n  position: relative;\n  border-top-left-radius: 0.25rem;\n  border-top-right-radius: 0.25rem;\n}\n.div-carregando {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  line-height: 50px;\n  text-align: center;\n  margin-top: 50px; /* para afastar um pouco da tabela */\n}\n", ""]);
 
 // exports
 
@@ -10466,7 +10465,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.is-invalid {\r\n  border-color: #dc3545;\n}\n.invalid-feedback {\r\n  color: #dc3545;\r\n  margin-top: 0.25rem;\r\n  font-size: 80%;\n}\r\n", ""]);
+exports.push([module.i, "\n.is-invalid {\n  border-color: #dc3545;\n}\n.invalid-feedback {\n  color: #dc3545;\n  margin-top: 0.25rem;\n  font-size: 80%;\n}\n", ""]);
 
 // exports
 

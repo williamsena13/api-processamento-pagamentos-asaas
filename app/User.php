@@ -6,6 +6,7 @@ use App\Src\Asaas;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ["cnpj", "name", "email", "password", "customer_id", "mobile_number"];
+    protected $fillable = ["cnpj", "name", "email", "password", "customer_id"];
 
     /**
      * The attributes that should be hidden for arrays.

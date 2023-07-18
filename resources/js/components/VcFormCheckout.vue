@@ -122,15 +122,17 @@
             class="list-group-item d-flex justify-content-between lh-condensed"
           >
             <div>
-              <h6 class="my-0">Produto<a href=""></a></h6>
-              <small class="text-muted">Exemplo de descrição</small>
+              <h6 class="my-0">Processamento de Pagamento<a href=""></a></h6>
+              <small class="text-muted"
+                >Plataforma de processamento de pagamentos
+              </small>
             </div>
-            <span class="text-muted">R$10</span>
+            <span class="text-muted">R$500,00</span>
           </li>
 
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (R$)</span>
-            <strong>R$<span id="span-value">20,00</span></strong>
+            <strong>R$<span id="span-value">500,00</span></strong>
           </li>
         </ul>
       </div>
@@ -148,11 +150,7 @@
       </div>
     </div>
     <div class="row" style="padding-top: 20px">
-      <div class="col-md-8 justify-center align-items-center">
-        <router-link class="btn btn-primary btn-lg btn-block" to="/obrigado">
-          TESTE
-        </router-link>
-      </div>
+      <div class="col-md-8 justify-center align-items-center"></div>
     </div>
   </div>
 </template>
